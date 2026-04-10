@@ -71,6 +71,148 @@ interface AutomationSession {
   };
 }
 
+// Simple Markdown renderer with streaming animation
+function MarkdownRenderer({ content }: { content: string }): JSX.Element {
+  if (!content) {
+    return (
+      <div className="flex items-center gap-2 text-slate-500">
+        <Loader2 className="w-4 h-4 animate-spin" />
+        <span className="text-xs">AI is thinking...</span>
+      </div>
+    );
+  }
+
+  // Parse markdown into HTML elements
+  const lines = content.split('\n');
+  const elements: JSX.Element[] = [];
+  let inList = false;
+  let listItems: JSX.Element[] = [];
+  let inCodeBlock = false;
+  let codeLines: string[] = [];
+  let codeBlockKey = 0;
+
+  const flushList = () => {
+    if (listItems.length > 0) {
+      elements.push(
+        <ul key={`list-${elements.length}`} className="list-disc list-inside space-y-1 my-2 ml-2">
+          {listItems}
+        </ul>
+      );
+      listItems = [];
+      inList = false;
+    }
+  };
+
+  const flushCode = () => {
+    if (codeLines.length > 0) {
+      elements.push(
+        <pre key={`code-${codeBlockKey++}`} className="bg-navy-950 border border-navy-700 rounded-lg p-3 my-2 overflow-x-auto">
+          <code className="text-sm text-emerald-400 font-mono">{codeLines.join('\n')}</code>
+        </pre>
+      );
+      codeLines = [];
+      inCodeBlock = false;
+    }
+  };
+
+  const renderInline = (text: string, key: string): JSX.Element => {
+    const parts: JSX.Element[] = [];
+    const regex = /(\*\*(.+?)\*\*)|(\*(.+?)\*)|(`(.+?)`)/g;
+    let lastIndex = 0;
+    let match;
+    let idx = 0;
+
+    while ((match = regex.exec(text)) !== null) {
+      if (match.index > lastIndex) {
+        parts.push(<span key={`${key}-${idx++}`}>{text.slice(lastIndex, match.index)}</span>);
+      }
+      if (match[2]) {
+        parts.push(<strong key={`${key}-${idx++}`} className="font-bold text-white">{match[2]}</strong>);
+      } else if (match[4]) {
+        parts.push(<em key={`${key}-${idx++}`} className="italic">{match[4]}</em>);
+      } else if (match[6]) {
+        parts.push(<code key={`${key}-${idx++}`} className="bg-navy-950 px-1.5 py-0.5 rounded text-emerald-400 font-mono text-xs">{match[6]}</code>);
+      }
+      lastIndex = regex.lastIndex;
+    }
+
+    if (lastIndex < text.length) {
+      parts.push(<span key={`${key}-${idx++}`}>{text.slice(lastIndex)}</span>);
+    }
+
+    return <span key={key}>{parts.length === 1 ? parts[0] : parts}</span>;
+  };
+
+  lines.forEach((line, i) => {
+    if (line.startsWith('```')) {
+      if (inCodeBlock) {
+        flushCode();
+      } else {
+        flushList();
+        inCodeBlock = true;
+      }
+      return;
+    }
+
+    if (inCodeBlock) {
+      codeLines.push(line);
+      return;
+    }
+
+    if (line.match(/^\d+\.\s/)) {
+      flushList();
+      const text = line.replace(/^\d+\.\s/, '');
+      elements.push(
+        <div key={`olist-${i}`} className="flex gap-2 my-1 ml-2">
+          <span className="text-emerald-500 font-bold min-w-[1.5rem]">{line.match(/^(\d+)\./)?.[1]}.</span>
+          <span className="text-slate-200">{renderInline(text, `olist-${i}`)}</span>
+        </div>
+      );
+      return;
+    }
+
+    if (line.startsWith('- ') || line.startsWith('* ')) {
+      if (!inList) inList = true;
+      const text = line.slice(2);
+      listItems.push(
+        <li key={`li-${i}`}>{renderInline(text, `li-${i}`)}</li>
+      );
+      return;
+    }
+
+    flushList();
+
+    if (line.startsWith('### ')) {
+      elements.push(<h3 key={`h3-${i}`} className="text-base font-bold text-white mt-3 mb-1">{renderInline(line.slice(4), `h3-${i}`)}</h3>);
+    } else if (line.startsWith('## ')) {
+      elements.push(<h2 key={`h2-${i}`} className="text-lg font-bold text-white mt-3 mb-1">{renderInline(line.slice(3), `h2-${i}`)}</h2>);
+    } else if (line.startsWith('# ')) {
+      elements.push(<h1 key={`h1-${i}`} className="text-xl font-bold text-white mt-3 mb-2">{renderInline(line.slice(2), `h1-${i}`)}</h1>);
+    } else if (line.startsWith('---')) {
+      elements.push(<hr key={`hr-${i}`} className="border-navy-700 my-3" />);
+    } else if (line.trim() === '') {
+      elements.push(<div key={`br-${i}`} className="h-2" />);
+    } else {
+      elements.push(<p key={`p-${i}`} className="my-1 leading-relaxed">{renderInline(line, `p-${i}`)}</p>);
+    }
+  });
+
+  flushList();
+  flushCode();
+
+  // Check if still streaming (content doesn't end with sentence-ending punctuation or newline)
+  const isStreaming = content.length > 0 && !content.match(/[.!?]\s*$/);
+
+  return (
+    <div className="space-y-0.5 animate-fadeIn">
+      {elements}
+      {isStreaming && (
+        <span className="inline-block w-2 h-4 bg-emerald-400 ml-0.5 animate-blink vertical-align-middle" />
+      )}
+    </div>
+  );
+}
+
 type ChatMode = 'general' | 'wizard';
 type ActiveTab = 'chat' | 'sessions' | 'history';
 
@@ -232,73 +374,77 @@ export default function ChatPage(): JSX.Element {
     setInput('');
     setAttachments([]);
 
+    // Create placeholder AI message for streaming
+    const aiMessageId = `${Date.now()}-ai`;
+    setMessages(prev => [...prev, {
+      id: aiMessageId,
+      role: 'ai',
+      content: '',
+      timestamp: new Date().toISOString(),
+      attachments: [],
+    }]);
+
     try {
-      const response = await axios.post('/api/chat/general', {
-        userId: user.userId,
-        chatId,
-        message: currentInput,
-        attachments: currentAttachments.map(a => a.filename),
+      const response = await fetch('/api/chat/stream', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          userId: user.userId,
+          chatId,
+          message: currentInput,
+          attachments: currentAttachments.map(a => a.filename),
+        }),
       });
 
-      if (response.data.success) {
-        const aiMessage: ChatMessage = {
-          id: `${Date.now()}-ai`,
-          role: 'ai',
-          content: response.data.data.message,
-          timestamp: new Date().toISOString(),
-          attachments: [],
-        };
+      const reader = response.body?.getReader();
+      if (!reader) throw new Error('Streaming not supported');
 
-        setMessages(prev => [...prev, aiMessage]);
-        setChatId(response.data.data.sessionId);
-        setLastResponse(response.data.data);
+      const decoder = new TextDecoder();
+      let buffer = '';
+      let eventType = '';
 
-        const triggered = detectTrigger(currentInput);
-        const signalTemplateId = parseSignal(response.data.data.message);
+      while (true) {
+        const { done, value } = await reader.read();
+        if (done) break;
 
-        if (signalTemplateId && !triggered) {
-          const template = templates.find(t => t.id === signalTemplateId);
-          if (template) {
-            setWizardState({
-              templateId: template.id,
-              templateName: template.name,
-              extracted: {},
-              remaining: template.fields?.map(f => f.key) || [],
-              currentField: template.fields?.[0]?.key || null,
-              progress: 0,
-              sessionId: null,
-              suggestedLawyers: [],
-              action: 'START_AUTOMATION',
-            });
-            setMode('wizard');
-          }
-        } else if (triggered) {
-          const template = templates.find(t => t.id === triggered.templateId);
-          if (template) {
-            setWizardState({
-              templateId: template.id,
-              templateName: template.name,
-              extracted: {},
-              remaining: template.fields?.map(f => f.key) || [],
-              currentField: template.fields?.[0]?.key || null,
-              progress: 0,
-              sessionId: null,
-              suggestedLawyers: [],
-              action: 'START_AUTOMATION',
-            });
-            setMode('wizard');
+        buffer += decoder.decode(value, { stream: true });
+        const lines = buffer.split('\n');
+        buffer = lines.pop() || '';
+
+        for (const line of lines) {
+          if (line.startsWith('event:')) {
+            eventType = line.slice(6).trim();
+          } else if (line.startsWith('data:') && eventType) {
+            const dataStr = line.slice(5).trim();
+            try {
+              const data = JSON.parse(dataStr);
+              if (eventType === 'session') {
+                // Session started
+              } else if (eventType === 'token') {
+                const token = data.token || '';
+                setMessages(prev => prev.map(m =>
+                  m.id === aiMessageId ? { ...m, content: m.content + token } : m
+                ));
+              } else if (eventType === 'done') {
+                setChatId(data.sessionId);
+                setLastResponse({ sessionId: data.sessionId, message: data.message });
+              } else if (eventType === 'error') {
+                setError(data.error);
+              }
+            } catch {
+              // Skip invalid JSON
+            }
+          } else if (line.trim() === '') {
+            eventType = '';
           }
         }
       }
     } catch {
       setError(t('errors.sendFailed' as any));
-      setMessages(prev => prev.map(m =>
-        m.id === userMessage.id ? { ...m, content: `${currentInput} (failed to send)` } : m
-      ));
     } finally {
       setSending(false);
     }
-  }, [input, attachments, user, chatId, detectTrigger, parseSignal, templates, t]);
+  }, [input, chatId, user, t, attachments]);
 
   const handleSendWizard = useCallback(async () => {
     if (!input.trim() || !user || !wizardState) return;
@@ -640,7 +786,13 @@ export default function ChatPage(): JSX.Element {
                             : 'bg-navy-800 text-slate-200 rounded-bl-md border border-navy-700'
                         }`}
                       >
-                        <p className="whitespace-pre-wrap break-words">{msg.content}</p>
+                        <div className="whitespace-pre-wrap break-words">
+                          {msg.role === 'ai' ? (
+                            <MarkdownRenderer content={msg.content} />
+                          ) : (
+                            <p className="whitespace-pre-wrap break-words">{msg.content}</p>
+                          )}
+                        </div>
 
                         {/* Attachments */}
                         {msg.attachments && msg.attachments.length > 0 && (

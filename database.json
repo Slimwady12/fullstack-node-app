@@ -107,6 +107,33 @@
         "showPhone": false,
         "showEmail": false
       }
+    },
+    {
+      "id": "359adb86-14d0-46a2-9588-2141101999cf",
+      "phone": "+998991234567",
+      "name": "Axad",
+      "roles": [
+        "user"
+      ],
+      "joinedAt": "2026-04-10T06:30:57.445Z",
+      "savedLawyers": [],
+      "profile": {
+        "email": null,
+        "avatar": null,
+        "language": "uz"
+      },
+      "notifications": {
+        "email": true,
+        "push": true,
+        "quietHours": {
+          "start": "22:00",
+          "end": "07:00"
+        }
+      },
+      "privacy": {
+        "showPhone": false,
+        "showEmail": false
+      }
     }
   ],
   "aiChats": [
@@ -376,6 +403,174 @@
       ],
       "createdAt": "2026-04-10T06:18:00.398Z",
       "updatedAt": "2026-04-10T06:18:04.187Z"
+    },
+    {
+      "id": "46a542c4-d3e5-4101-aa13-5c7fbbef3abd",
+      "userId": "test-user-123",
+      "title": "hello",
+      "messages": [
+        {
+          "role": "user",
+          "content": "hello",
+          "timestamp": "2026-04-10T06:27:45.481Z",
+          "attachments": []
+        },
+        {
+          "role": "ai",
+          "content": "Hello! How can I help you today?",
+          "timestamp": "2026-04-10T06:27:50.670Z",
+          "attachments": []
+        }
+      ],
+      "createdAt": "2026-04-10T06:27:45.481Z",
+      "updatedAt": "2026-04-10T06:27:50.670Z"
+    },
+    {
+      "id": "06af02f3-829c-4114-8733-1e2a4c53b959",
+      "userId": "test",
+      "title": "What is contract law?",
+      "messages": [
+        {
+          "role": "user",
+          "content": "What is contract law?",
+          "timestamp": "2026-04-10T06:29:07.452Z",
+          "attachments": []
+        },
+        {
+          "role": "ai",
+          "content": "Contract law is the body of law that governs agreements between people or organizations. It determines when an agreement is legally enforceable and what happens if one side does not do what they promised.\n\nIn general, contract law covers:\n- **Offer and acceptance**: one party makes an offer, and the other agrees to it.\n- **Consideration**: each side gives something of value.\n- **Intention to create legal relations**: the parties meant the agreement to be legally binding.\n- **Capacity and legality**: the parties must be able to contract, and the purpose must be lawful.\n\nIf a valid contract is broken, the law may provide remedies such as:\n- **Damages**: money compensation\n- **Specific performance**: a court order to carry out the promise\n- **Cancellation or rescission**: ending the contract\n\nContract law is important in everyday life, from buying goods and signing leases to employment and business deals.",
+          "timestamp": "2026-04-10T06:29:12.103Z",
+          "attachments": []
+        }
+      ],
+      "createdAt": "2026-04-10T06:29:07.452Z",
+      "updatedAt": "2026-04-10T06:29:12.103Z"
+    },
+    {
+      "id": "d2ae9473-42b7-4ce1-8f2d-576e41fb3e4a",
+      "userId": "359adb86-14d0-46a2-9588-2141101999cf",
+      "title": "Qul olish qonuniymi?>",
+      "messages": [
+        {
+          "role": "user",
+          "content": "Qul olish qonuniymi?>",
+          "timestamp": "2026-04-10T06:31:11.891Z",
+          "attachments": []
+        },
+        {
+          "role": "ai",
+          "content": "Agar siz **“qul olish”**ni odamni majburan ushlab turish, sotib olish yoki qullik holatiga tushirish ma’nosida so‘rayotgan bo‘lsangiz — **yo‘q, bu qonuniy emas**. Qullik va odam savdosi deyarli barcha davlatlarda, jumladan xalqaro huquqda ham taqiqlangan.\n\nAgar siz boshqa ma’noda, masalan:\n- **“qul”** so‘zi bilan biror texnik narsa,\n- **“qul olish”** iborasi bilan boshqa bir amaliyot,\n\nni nazarda tutgan bo‘lsangiz, aniqlashtirib yozing — men to‘g‘ri javob beraman.",
+          "timestamp": "2026-04-10T06:31:16.453Z",
+          "attachments": []
+        }
+      ],
+      "createdAt": "2026-04-10T06:31:11.891Z",
+      "updatedAt": "2026-04-10T06:31:16.453Z"
+    },
+    {
+      "id": "27c39a12-df8c-4b76-ab89-204883e145d7",
+      "userId": "359adb86-14d0-46a2-9588-2141101999cf",
+      "title": "qul ayol kishi bo'lsachi?",
+      "messages": [
+        {
+          "role": "user",
+          "content": "qul ayol kishi bo'lsachi?",
+          "timestamp": "2026-04-10T06:31:35.924Z",
+          "attachments": []
+        },
+        {
+          "role": "ai",
+          "content": "Agar siz “Qul ayol kishi bo‘lsa-chi?” demoqchi bo‘lsangiz, bu odatda **ayol qullik holatida bo‘lsa** degani.\n\nTarixda va ayrim jamiyatlarda:\n- **Qul ayol** — huquqi cheklangan, boshqasiga qarashli bo‘lgan ayol.\n- Unga ko‘pincha **mehnat majburiyati** yuklangan.\n- Ba’zi davrlarda u **uy ishlari**, **dalada ishlash** yoki boshqa xizmatlarga majbur bo‘lgan.\n- Bu holat **inson huquqlariga zid** va bugungi kunda qullik noqonuniy hisoblanadi.\n\nAgar siz bu iborani boshqa ma’noda so‘ragan bo‘lsangiz, masalan:\n- **“qul ayol”** so‘zining lug‘aviy ma’nosi,\n- tarixiy ma’nosi,\n- yoki diniy/ijtimoiy konteksti,\n\naniqroq yozing, men tushuntirib beraman.",
+          "timestamp": "2026-04-10T06:31:39.752Z",
+          "attachments": []
+        }
+      ],
+      "createdAt": "2026-04-10T06:31:35.924Z",
+      "updatedAt": "2026-04-10T06:31:39.752Z"
+    },
+    {
+      "id": "1226c7db-7f37-4278-a4ed-189f078f5fe1",
+      "userId": "359adb86-14d0-46a2-9588-2141101999cf",
+      "title": "qaysi biri ko'proq qamoq jazo beradi, ayol kishi q...",
+      "messages": [
+        {
+          "role": "user",
+          "content": "qaysi biri ko'proq qamoq jazo beradi, ayol kishi qul yo'ki erkak kishi qul",
+          "timestamp": "2026-04-10T06:32:23.504Z",
+          "attachments": []
+        },
+        {
+          "role": "ai",
+          "content": "Savolingiz biroz noaniq. Agar siz **qaysi biri ko‘proq qamoq jazosi oladi — ayolmi yoki erkakmi** deb so‘rayotgan bo‘lsangiz, bu **jinoyat turiga, qonunga va sud qaroriga** bog‘liq; jinsning o‘zi avtomatik ravishda ko‘proq qamoq bermaydi.\n\nAgar siz **“qul”** so‘zini boshqa ma’noda ishlatgan bo‘lsangiz, iltimos, savolni biroz aniqroq yozing — men tushunarli qilib javob beraman.",
+          "timestamp": "2026-04-10T06:32:26.173Z",
+          "attachments": []
+        }
+      ],
+      "createdAt": "2026-04-10T06:32:23.504Z",
+      "updatedAt": "2026-04-10T06:32:26.173Z"
+    },
+    {
+      "id": "97ac73be-98d8-4339-a275-40dc150e8295",
+      "userId": "359adb86-14d0-46a2-9588-2141101999cf",
+      "title": "2alasi bir xil 2 ta olam birida men erkak kishi qu...",
+      "messages": [
+        {
+          "role": "user",
+          "content": "2alasi bir xil 2 ta olam birida men erkak kishi qulim bor 2-chisida esa ayol ikkalasi bilan bir xil ishlar yuz bergan qaysi olamda ko'proq qamoq jazo olar edim?",
+          "timestamp": "2026-04-10T06:33:09.840Z",
+          "attachments": []
+        },
+        {
+          "role": "ai",
+          "content": "Agar savolingiz **ikki xil olamda bir xil ish sodir bo‘lsa, biri erkak, biri ayol bo‘lsa qaysi birida ko‘proq qamoq jazosi bo‘lardi?** degan ma’noda bo‘lsa, **aniq javob yo‘q** — bu **qaysi davlat, qaysi qonun, qaysi jinoyat** ekaniga bog‘liq.\n\nUmuman olganda:\n\n- **Qonun oldida jins bo‘yicha farq qilmasligi kerak**\n- Lekin amalda ba’zi joylarda:\n  - sud hukm chiqarishda,\n  - jazoni yengillashtirishda,\n  - yoki ijtimoiy qarashlar sabab  \n  **erkak va ayolga boshqacha munosabat bo‘lishi mumkin**\n\nAgar siz **“qulim bor”** deganda **“qurolim bor”** yoki boshqa bir so‘zni nazarda tutgan bo‘lsangiz, savolni to‘g‘rilab yozing — men aniqroq javob beraman.  \nMasalan:  \n- qaysi jinoyat?\n- qaysi davlat?\n- qaysi sharoit?\n\nShunda men sizga **qaysi holatda qamoq jazosi ko‘proq bo‘lishi mumkinligini** aniqroq tushuntiraman.",
+          "timestamp": "2026-04-10T06:33:13.585Z",
+          "attachments": []
+        }
+      ],
+      "createdAt": "2026-04-10T06:33:09.840Z",
+      "updatedAt": "2026-04-10T06:33:13.585Z"
+    },
+    {
+      "id": "31a3a5bf-2f5a-490f-b6e5-0efd81b3ecac",
+      "userId": "359adb86-14d0-46a2-9588-2141101999cf",
+      "title": "sen kimsan",
+      "messages": [
+        {
+          "role": "user",
+          "content": "sen kimsan",
+          "timestamp": "2026-04-10T06:33:30.937Z",
+          "attachments": []
+        },
+        {
+          "role": "ai",
+          "content": "Men ChatGPTman — OpenAI tomonidan yaratilgan sun’iy intellekt yordamchisiman. Sizga savollarga javob berish, matn yozish, tarjima qilish va boshqa ko‘p narsalarda yordam bera olaman.",
+          "timestamp": "2026-04-10T06:33:33.110Z",
+          "attachments": []
+        }
+      ],
+      "createdAt": "2026-04-10T06:33:30.937Z",
+      "updatedAt": "2026-04-10T06:33:33.110Z"
+    },
+    {
+      "id": "e6fa2a28-7dec-48d3-8e4b-97480ba759c7",
+      "userId": "359adb86-14d0-46a2-9588-2141101999cf",
+      "title": "geymisan",
+      "messages": [
+        {
+          "role": "user",
+          "content": "geymisan",
+          "timestamp": "2026-04-10T06:33:37.803Z",
+          "attachments": []
+        },
+        {
+          "role": "ai",
+          "content": "Could you clarify what you mean by “geymisan”?  \nIf you meant a name, term, or phrase, I can help explain or translate it.",
+          "timestamp": "2026-04-10T06:33:39.661Z",
+          "attachments": []
+        }
+      ],
+      "createdAt": "2026-04-10T06:33:37.803Z",
+      "updatedAt": "2026-04-10T06:33:39.661Z"
     }
   ],
   "lawyers": [
@@ -866,6 +1061,102 @@
         "messageLength": 36
       },
       "timestamp": "2026-04-10T06:18:04.187Z",
+      "activeRole": "USER"
+    },
+    {
+      "id": "2090463c-86bc-4f5a-a911-046bfa21597f",
+      "userId": "test-user-123",
+      "action": "CHAT_STREAM",
+      "details": {
+        "sessionId": "46a542c4-d3e5-4101-aa13-5c7fbbef3abd",
+        "messageLength": 5,
+        "responseLength": 32
+      },
+      "timestamp": "2026-04-10T06:27:50.670Z",
+      "activeRole": "USER"
+    },
+    {
+      "id": "a98c658c-3879-44f2-87c5-d22e9b0be82d",
+      "userId": "test",
+      "action": "CHAT_STREAM",
+      "details": {
+        "sessionId": "06af02f3-829c-4114-8733-1e2a4c53b959",
+        "messageLength": 21,
+        "responseLength": 915
+      },
+      "timestamp": "2026-04-10T06:29:12.103Z",
+      "activeRole": "USER"
+    },
+    {
+      "id": "1e2651eb-b0c9-4ccd-8303-cde7384336ef",
+      "userId": "359adb86-14d0-46a2-9588-2141101999cf",
+      "action": "CHAT_STREAM",
+      "details": {
+        "sessionId": "d2ae9473-42b7-4ce1-8f2d-576e41fb3e4a",
+        "messageLength": 21,
+        "responseLength": 468
+      },
+      "timestamp": "2026-04-10T06:31:16.453Z",
+      "activeRole": "USER"
+    },
+    {
+      "id": "4723f8e9-7b39-4255-8dc5-bb070c5724e3",
+      "userId": "359adb86-14d0-46a2-9588-2141101999cf",
+      "action": "CHAT_STREAM",
+      "details": {
+        "sessionId": "27c39a12-df8c-4b76-ab89-204883e145d7",
+        "messageLength": 25,
+        "responseLength": 645
+      },
+      "timestamp": "2026-04-10T06:31:39.752Z",
+      "activeRole": "USER"
+    },
+    {
+      "id": "190c174d-eb95-475c-bff5-fa6ee91a037e",
+      "userId": "359adb86-14d0-46a2-9588-2141101999cf",
+      "action": "CHAT_STREAM",
+      "details": {
+        "sessionId": "1226c7db-7f37-4278-a4ed-189f078f5fe1",
+        "messageLength": 74,
+        "responseLength": 379
+      },
+      "timestamp": "2026-04-10T06:32:26.173Z",
+      "activeRole": "USER"
+    },
+    {
+      "id": "d4f7a9ab-f027-444e-8dad-ae7e96f9bfb8",
+      "userId": "359adb86-14d0-46a2-9588-2141101999cf",
+      "action": "CHAT_STREAM",
+      "details": {
+        "sessionId": "97ac73be-98d8-4339-a275-40dc150e8295",
+        "messageLength": 160,
+        "responseLength": 820
+      },
+      "timestamp": "2026-04-10T06:33:13.585Z",
+      "activeRole": "USER"
+    },
+    {
+      "id": "42e54603-38b6-426f-801b-28d381d92e68",
+      "userId": "359adb86-14d0-46a2-9588-2141101999cf",
+      "action": "CHAT_STREAM",
+      "details": {
+        "sessionId": "31a3a5bf-2f5a-490f-b6e5-0efd81b3ecac",
+        "messageLength": 10,
+        "responseLength": 182
+      },
+      "timestamp": "2026-04-10T06:33:33.110Z",
+      "activeRole": "USER"
+    },
+    {
+      "id": "9c143df1-8020-4a1e-bbab-da313fca7d9a",
+      "userId": "359adb86-14d0-46a2-9588-2141101999cf",
+      "action": "CHAT_STREAM",
+      "details": {
+        "sessionId": "e6fa2a28-7dec-48d3-8e4b-97480ba759c7",
+        "messageLength": 8,
+        "responseLength": 122
+      },
+      "timestamp": "2026-04-10T06:33:39.661Z",
       "activeRole": "USER"
     }
   ],
