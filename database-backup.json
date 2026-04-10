@@ -1,0 +1,308 @@
+{
+  "users": [
+    {
+      "id": "test-user-001",
+      "phone": "+998901234567",
+      "name": "Test User",
+      "roles": [
+        "user"
+      ],
+      "joinedAt": "2026-04-09T10:04:24.459Z",
+      "savedLawyers": [],
+      "profile": {
+        "email": null,
+        "avatar": null,
+        "language": "uz"
+      },
+      "notifications": {
+        "email": true,
+        "push": true,
+        "quietHours": {
+          "start": "22:00",
+          "end": "07:00"
+        }
+      },
+      "privacy": {
+        "showPhone": false,
+        "showEmail": false
+      }
+    },
+    {
+      "id": "test-admin-001",
+      "phone": "123456789",
+      "name": "Super Admin",
+      "roles": [
+        "admin"
+      ],
+      "joinedAt": "2026-04-09T10:04:24.525Z",
+      "savedLawyers": [],
+      "profile": {
+        "email": null,
+        "avatar": null,
+        "language": "en"
+      },
+      "notifications": {
+        "email": true,
+        "push": true,
+        "quietHours": {
+          "start": "22:00",
+          "end": "07:00"
+        }
+      },
+      "privacy": {
+        "showPhone": false,
+        "showEmail": false
+      }
+    }
+  ],
+  "aiChats": [],
+  "lawyers": [
+    {
+      "id": "test-lawyer-001",
+      "name": "John Doe",
+      "phone": "+998901111111",
+      "verified": true,
+      "specializations": [
+        "Employment Law",
+        "Contract Law"
+      ],
+      "languages": [
+        "uz",
+        "ru"
+      ],
+      "rating": 0,
+      "reviewCount": 0,
+      "casesCompleted": 0,
+      "price": 500000,
+      "responseTime": "2 hours",
+      "online": true,
+      "bio": "Experienced employment lawyer in Uzbekistan.",
+      "education": [
+        {
+          "institution": "Tashkent State University",
+          "degree": "Law Degree",
+          "year": 2015
+        }
+      ],
+      "experience": [
+        {
+          "company": "Legal Firm LLC",
+          "position": "Senior Lawyer",
+          "from": "2015-01-01T00:00:00.000Z",
+          "to": null
+        }
+      ],
+      "license": {
+        "number": "L-12345",
+        "issuedAt": "2015-06-01T00:00:00.000Z",
+        "expiresAt": "2025-06-01T00:00:00.000Z"
+      },
+      "images": {
+        "profile": null,
+        "license": null,
+        "cv": null
+      },
+      "reviews": [],
+      "addedBy": "test-admin-001",
+      "addedAt": "2026-04-09T10:04:24.648Z"
+    }
+  ],
+  "templates": [
+    {
+      "id": "test-template-001",
+      "name": "Test Employment Contract",
+      "description": "A test employment contract template",
+      "category": "Employment",
+      "riskLevel": "GREEN",
+      "jurisdiction": "Uzbekistan",
+      "status": "ACTIVE",
+      "version": 1,
+      "pdfFile": null,
+      "fields": [
+        {
+          "key": "employee_name",
+          "label": "Employee Name",
+          "type": "text",
+          "required": true,
+          "validation": null,
+          "pii": true
+        },
+        {
+          "key": "start_date",
+          "label": "Start Date",
+          "type": "date",
+          "required": true,
+          "validation": null,
+          "pii": false
+        },
+        {
+          "key": "salary",
+          "label": "Monthly Salary",
+          "type": "number",
+          "required": true,
+          "validation": null,
+          "pii": false
+        }
+      ],
+      "aiConfig": {
+        "model": "gpt-4o",
+        "language": "uz",
+        "temperature": 0.7,
+        "systemPrompt": "You are helping fill out an employment contract.",
+        "conversationStyle": "professional",
+        "maxTurns": 10,
+        "fieldQuestions": [
+          {
+            "fieldKey": "employee_name",
+            "aiQuestion": "What is the employee full name?",
+            "aiHint": "Extract the employee name",
+            "extractionRule": "\"employee_name\":\\s*\"([^\"]*)\"",
+            "retryPrompt": "Please provide the employee name.",
+            "skipCondition": null
+          },
+          {
+            "fieldKey": "start_date",
+            "aiQuestion": "What is the start date?",
+            "aiHint": "Extract the start date",
+            "extractionRule": "\"start_date\":\\s*\"([^\"]*)\"",
+            "retryPrompt": "Please provide the start date.",
+            "skipCondition": null
+          },
+          {
+            "fieldKey": "salary",
+            "aiQuestion": "What is the monthly salary?",
+            "aiHint": "Extract the salary amount",
+            "extractionRule": "\"salary\":\\s*\"([^\"]*)\"",
+            "retryPrompt": "Please provide the salary amount.",
+            "skipCondition": null
+          }
+        ],
+        "triggerKeywords": [
+          "contract",
+          "employment"
+        ],
+        "triggerSignal": "AUTOMATION:test-template-001"
+      },
+      "review": {
+        "requiresLawyerReview": true,
+        "signatureRequired": true,
+        "signatureFields": [
+          "employee_name"
+        ]
+      },
+      "createdAt": "2026-04-09T10:04:24.587Z",
+      "updatedAt": "2026-04-09T10:04:24.587Z",
+      "createdBy": "test-admin-001"
+    }
+  ],
+  "automations": [
+    {
+      "id": "253fc803-97f7-4d85-a745-f824d0983391",
+      "templateId": "test-template-001",
+      "templateVersion": 1,
+      "userId": "test-user-001",
+      "status": "IN_PROGRESS",
+      "sessionState": {
+        "extracted": {},
+        "remaining": [
+          "employee_name",
+          "start_date",
+          "salary"
+        ],
+        "currentField": "employee_name",
+        "progress": 0,
+        "messages": [
+          {
+            "role": "user",
+            "content": "test message"
+          },
+          {
+            "role": "assistant",
+            "content": "This is a simulated response from the AI legal assistant. In simulation mode, responses are generated locally without calling the OpenAI API. Please configure your OpenAI API key in system settings for real AI responses."
+          }
+        ]
+      },
+      "createdAt": "2026-04-10T04:25:53.252Z",
+      "updatedAt": "2026-04-10T04:25:53.255Z"
+    }
+  ],
+  "documents": [],
+  "jobs": [],
+  "disputes": [],
+  "conversations": [],
+  "notifications": [],
+  "auditLogs": [
+    {
+      "id": "audit-001",
+      "userId": "system",
+      "action": "TEST_USER_CREATED",
+      "details": {
+        "userId": "test-user-001"
+      },
+      "timestamp": "2026-04-09T10:04:24.461Z",
+      "activeRole": "SYSTEM"
+    },
+    {
+      "id": "audit-template-001",
+      "userId": "test-admin-001",
+      "action": "TEMPLATE_CREATED",
+      "details": {
+        "templateId": "test-template-001",
+        "templateName": "Test Employment Contract",
+        "version": 1
+      },
+      "timestamp": "2026-04-09T10:04:24.587Z",
+      "activeRole": "ADMIN"
+    },
+    {
+      "id": "audit-lawyer-001",
+      "userId": "test-admin-001",
+      "action": "LAWYER_CREATED",
+      "details": {
+        "lawyerId": "test-lawyer-001",
+        "lawyerName": "John Doe"
+      },
+      "timestamp": "2026-04-09T10:04:24.648Z",
+      "activeRole": "ADMIN"
+    },
+    {
+      "id": "db406243-3059-4c30-a728-6b8bdab99c2a",
+      "userId": "test-user-001",
+      "action": "MIDDLEMAN_CHAT",
+      "details": {
+        "templateId": "test-template-001",
+        "sessionId": "253fc803-97f7-4d85-a745-f824d0983391",
+        "tokens": {
+          "input": 50,
+          "output": 45
+        },
+        "latency": 1,
+        "model": "gpt-4o",
+        "action": "continue",
+        "progress": 0
+      },
+      "timestamp": "2026-04-10T04:25:53.255Z",
+      "activeRole": "USER"
+    }
+  ],
+  "systemConfig": {
+    "ai": {
+      "openaiApiKey": "test-key-123",
+      "defaultModel": "gpt-4o",
+      "simulationMode": true,
+      "masterPrompt": "Test prompt"
+    },
+    "suggestionRules": {
+      "ratingThreshold": 4,
+      "specializationMatchWeight": 0.5,
+      "onlinePriority": true,
+      "responseTimeWeight": 0.3,
+      "maxSuggestions": 5
+    },
+    "featureFlags": {
+      "enableChat": true,
+      "enableJobs": true,
+      "enableLawyerSearch": true
+    }
+  }
+}

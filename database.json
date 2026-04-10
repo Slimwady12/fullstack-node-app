@@ -1,0 +1,751 @@
+{
+  "users": [
+    {
+      "id": "test-user-001",
+      "phone": "+998901234567",
+      "name": "Test User",
+      "roles": [
+        "user"
+      ],
+      "joinedAt": "2026-04-09T10:04:24.459Z",
+      "savedLawyers": [],
+      "profile": {
+        "email": null,
+        "avatar": null,
+        "language": "uz"
+      },
+      "notifications": {
+        "email": true,
+        "push": true,
+        "quietHours": {
+          "start": "22:00",
+          "end": "07:00"
+        }
+      },
+      "privacy": {
+        "showPhone": false,
+        "showEmail": false
+      }
+    },
+    {
+      "id": "test-admin-001",
+      "phone": "123456789",
+      "name": "Super Admin",
+      "roles": [
+        "admin"
+      ],
+      "joinedAt": "2026-04-09T10:04:24.525Z",
+      "savedLawyers": [],
+      "profile": {
+        "email": null,
+        "avatar": null,
+        "language": "en"
+      },
+      "notifications": {
+        "email": true,
+        "push": true,
+        "quietHours": {
+          "start": "22:00",
+          "end": "07:00"
+        }
+      },
+      "privacy": {
+        "showPhone": false,
+        "showEmail": false
+      }
+    },
+    {
+      "id": "f4b51630-6cbb-4a2a-a145-9817553d8e17",
+      "phone": "+998901234567",
+      "name": "Adminka",
+      "roles": [
+        "user"
+      ],
+      "joinedAt": "2026-04-10T05:57:40.073Z",
+      "savedLawyers": [],
+      "profile": {
+        "email": null,
+        "avatar": null,
+        "language": "uz"
+      },
+      "notifications": {
+        "email": true,
+        "push": true,
+        "quietHours": {
+          "start": "22:00",
+          "end": "07:00"
+        }
+      },
+      "privacy": {
+        "showPhone": false,
+        "showEmail": false
+      }
+    }
+  ],
+  "aiChats": [
+    {
+      "id": "d10c4f5f-cbbc-4469-a51a-50e9d20802ab",
+      "userId": "test-user-001",
+      "title": "Salom",
+      "messages": [
+        {
+          "role": "user",
+          "content": "Salom",
+          "timestamp": "2026-04-10T05:25:29.905Z",
+          "attachments": []
+        },
+        {
+          "role": "ai",
+          "content": "This is a simulated response from the AI legal assistant. In simulation mode, responses are generated locally without calling the OpenAI API. Please configure your OpenAI API key in system settings for real AI responses.",
+          "timestamp": "2026-04-10T05:25:29.908Z",
+          "attachments": []
+        }
+      ],
+      "createdAt": "2026-04-10T05:25:29.905Z",
+      "updatedAt": "2026-04-10T05:25:29.908Z"
+    },
+    {
+      "id": "cb659720-7193-4a2c-b6d1-2de6227df525",
+      "userId": "test-user-001",
+      "title": "Shartnoma qanday tuziladi?",
+      "messages": [
+        {
+          "role": "user",
+          "content": "Shartnoma qanday tuziladi?",
+          "timestamp": "2026-04-10T05:32:35.444Z",
+          "attachments": []
+        },
+        {
+          "role": "ai",
+          "content": "Для создания договора в Узбекистане необходимо учесть следующие ключевые элементы:\n\n1. **Наименование договора** - Определите тип договора (купли-продажи, аренды, услуг и т.д.)\n\n2. **Стороны договора** - Полные реквизиты всех сторон:\n   - Физические лица: ФИО, паспортные данные, адрес\n   - Юридические лица: наименование, ИНН, ОГРН, юридический адрес\n\n3. **Предмет договора** - Четкое описание предмета\n\n4. **Права и обязанности сторон**\n\n5. **Цена и порядок расчетов**\n\n6. **Срок действия договора**\n\n7. **Ответственность сторон**\n\n8. **Порядок разрешения споров**\n\nРекомендуется обратиться к юристу для проверки договора перед подписанием.",
+          "timestamp": "2026-04-10T05:32:35.447Z",
+          "attachments": []
+        }
+      ],
+      "createdAt": "2026-04-10T05:32:35.444Z",
+      "updatedAt": "2026-04-10T05:32:35.447Z"
+    },
+    {
+      "id": "d261566d-c453-4150-929f-eeb891d47c3a",
+      "userId": "test-user-001",
+      "title": "hello",
+      "messages": [
+        {
+          "role": "user",
+          "content": "hello",
+          "timestamp": "2026-04-10T05:32:39.719Z",
+          "attachments": []
+        },
+        {
+          "role": "ai",
+          "content": "This is a simulated response from the AI legal assistant. In simulation mode, responses are generated locally without calling the OpenAI API. Please configure your OpenAI API key in system settings for real AI responses.",
+          "timestamp": "2026-04-10T05:32:39.720Z",
+          "attachments": []
+        }
+      ],
+      "createdAt": "2026-04-10T05:32:39.719Z",
+      "updatedAt": "2026-04-10T05:32:39.720Z"
+    },
+    {
+      "id": "64d1247f-237a-4516-88ca-fd6dd05fcdcd",
+      "userId": "test-user-001",
+      "title": "Shartnoma qanday tuziladi?",
+      "messages": [
+        {
+          "role": "user",
+          "content": "Shartnoma qanday tuziladi?",
+          "timestamp": "2026-04-10T05:34:28.021Z",
+          "attachments": []
+        },
+        {
+          "role": "ai",
+          "content": "Для создания договора в Узбекистане необходимо учесть следующие ключевые элементы:\n\n1. **Наименование договора** - Определите тип договора (купли-продажи, аренды, услуг и т.д.)\n\n2. **Стороны договора** - Полные реквизиты всех сторон:\n   - Физические лица: ФИО, паспортные данные, адрес\n   - Юридические лица: наименование, ИНН, ОГРН, юридический адрес\n\n3. **Предмет договора** - Четкое описание предмета\n\n4. **Права и обязанности сторон**\n\n5. **Цена и порядок расчетов**\n\n6. **Срок действия договора**\n\n7. **Ответственность сторон**\n\n8. **Порядок разрешения споров**\n\nРекомендуется обратиться к юристу для проверки договора перед подписанием.",
+          "timestamp": "2026-04-10T05:34:28.024Z",
+          "attachments": []
+        }
+      ],
+      "createdAt": "2026-04-10T05:34:28.021Z",
+      "updatedAt": "2026-04-10T05:34:28.024Z"
+    },
+    {
+      "id": "98c1e8b6-026f-466a-ba6b-5686e954a538",
+      "userId": "f4b51630-6cbb-4a2a-a145-9817553d8e17",
+      "title": "Shartnoma qanday tuziladi?",
+      "messages": [
+        {
+          "role": "user",
+          "content": "Shartnoma qanday tuziladi?",
+          "timestamp": "2026-04-10T05:57:54.202Z",
+          "attachments": []
+        }
+      ],
+      "createdAt": "2026-04-10T05:57:54.202Z",
+      "updatedAt": "2026-04-10T05:57:54.202Z"
+    },
+    {
+      "id": "85821e53-2680-4f20-b13f-c9610f8dc787",
+      "userId": "f4b51630-6cbb-4a2a-a145-9817553d8e17",
+      "title": "Ko'chmas mulkni ro'yxatdan o'tkazish",
+      "messages": [
+        {
+          "role": "user",
+          "content": "Ko'chmas mulkni ro'yxatdan o'tkazish",
+          "timestamp": "2026-04-10T05:58:44.550Z",
+          "attachments": []
+        }
+      ],
+      "createdAt": "2026-04-10T05:58:44.550Z",
+      "updatedAt": "2026-04-10T05:58:44.550Z"
+    },
+    {
+      "id": "72883637-4d25-4325-9491-3fe4ce6d1154",
+      "userId": "f4b51630-6cbb-4a2a-a145-9817553d8e17",
+      "title": "Nizo holatida nima qilish kerak?",
+      "messages": [
+        {
+          "role": "user",
+          "content": "Nizo holatida nima qilish kerak?",
+          "timestamp": "2026-04-10T05:59:05.121Z",
+          "attachments": []
+        }
+      ],
+      "createdAt": "2026-04-10T05:59:05.121Z",
+      "updatedAt": "2026-04-10T05:59:05.121Z"
+    },
+    {
+      "id": "68be090d-adcb-4f8d-990d-eeed655d9f88",
+      "userId": "f4b51630-6cbb-4a2a-a145-9817553d8e17",
+      "title": "Ko'chmas mulkni ro'yxatdan o'tkazish",
+      "messages": [
+        {
+          "role": "user",
+          "content": "Ko'chmas mulkni ro'yxatdan o'tkazish",
+          "timestamp": "2026-04-10T05:59:38.521Z",
+          "attachments": []
+        }
+      ],
+      "createdAt": "2026-04-10T05:59:38.521Z",
+      "updatedAt": "2026-04-10T05:59:38.521Z"
+    },
+    {
+      "id": "40066f51-bbad-4709-8131-45217f0ee506",
+      "userId": "test-user",
+      "title": "hello",
+      "messages": [
+        {
+          "role": "user",
+          "content": "hello",
+          "timestamp": "2026-04-10T06:03:28.741Z",
+          "attachments": []
+        }
+      ],
+      "createdAt": "2026-04-10T06:03:28.741Z",
+      "updatedAt": "2026-04-10T06:03:28.741Z"
+    },
+    {
+      "id": "79a19e1b-b6a1-4a86-a5c2-0f2587a54e31",
+      "userId": "test-user-123",
+      "title": "hello",
+      "messages": [
+        {
+          "role": "user",
+          "content": "hello",
+          "timestamp": "2026-04-10T06:04:16.998Z",
+          "attachments": []
+        }
+      ],
+      "createdAt": "2026-04-10T06:04:16.998Z",
+      "updatedAt": "2026-04-10T06:04:16.998Z"
+    },
+    {
+      "id": "c791c833-e029-4fb3-8e3d-a1efc2e1080f",
+      "userId": "test-user-123",
+      "title": "hello",
+      "messages": [
+        {
+          "role": "user",
+          "content": "hello",
+          "timestamp": "2026-04-10T06:05:09.869Z",
+          "attachments": []
+        }
+      ],
+      "createdAt": "2026-04-10T06:05:09.869Z",
+      "updatedAt": "2026-04-10T06:05:09.869Z"
+    },
+    {
+      "id": "bc9f74da-1acd-4e70-932c-f520c6c780b8",
+      "userId": "test-user-123",
+      "title": "What is contract law?",
+      "messages": [
+        {
+          "role": "user",
+          "content": "What is contract law?",
+          "timestamp": "2026-04-10T06:09:42.966Z",
+          "attachments": []
+        }
+      ],
+      "createdAt": "2026-04-10T06:09:42.966Z",
+      "updatedAt": "2026-04-10T06:09:42.966Z"
+    }
+  ],
+  "lawyers": [
+    {
+      "id": "test-lawyer-001",
+      "name": "John Doe",
+      "phone": "+998901111111",
+      "verified": true,
+      "specializations": [
+        "Employment Law",
+        "Contract Law"
+      ],
+      "languages": [
+        "uz",
+        "ru"
+      ],
+      "rating": 0,
+      "reviewCount": 0,
+      "casesCompleted": 0,
+      "price": 500000,
+      "responseTime": "2 hours",
+      "online": true,
+      "bio": "Experienced employment lawyer in Uzbekistan.",
+      "education": [
+        {
+          "institution": "Tashkent State University",
+          "degree": "Law Degree",
+          "year": 2015
+        }
+      ],
+      "experience": [
+        {
+          "company": "Legal Firm LLC",
+          "position": "Senior Lawyer",
+          "from": "2015-01-01T00:00:00.000Z",
+          "to": null
+        }
+      ],
+      "license": {
+        "number": "L-12345",
+        "issuedAt": "2015-06-01T00:00:00.000Z",
+        "expiresAt": "2025-06-01T00:00:00.000Z"
+      },
+      "images": {
+        "profile": null,
+        "license": null,
+        "cv": null
+      },
+      "reviews": [],
+      "addedBy": "test-admin-001",
+      "addedAt": "2026-04-09T10:04:24.648Z"
+    }
+  ],
+  "templates": [
+    {
+      "id": "test-template-001",
+      "name": "Test Employment Contract",
+      "description": "A test employment contract template",
+      "category": "Employment",
+      "riskLevel": "GREEN",
+      "jurisdiction": "Uzbekistan",
+      "status": "ACTIVE",
+      "version": 1,
+      "pdfFile": null,
+      "fields": [
+        {
+          "key": "employee_name",
+          "label": "Employee Name",
+          "type": "text",
+          "required": true,
+          "validation": null,
+          "pii": true
+        },
+        {
+          "key": "start_date",
+          "label": "Start Date",
+          "type": "date",
+          "required": true,
+          "validation": null,
+          "pii": false
+        },
+        {
+          "key": "salary",
+          "label": "Monthly Salary",
+          "type": "number",
+          "required": true,
+          "validation": null,
+          "pii": false
+        }
+      ],
+      "aiConfig": {
+        "model": "gpt-4o",
+        "language": "uz",
+        "temperature": 0.7,
+        "systemPrompt": "You are helping fill out an employment contract.",
+        "conversationStyle": "professional",
+        "maxTurns": 10,
+        "fieldQuestions": [
+          {
+            "fieldKey": "employee_name",
+            "aiQuestion": "What is the employee full name?",
+            "aiHint": "Extract the employee name",
+            "extractionRule": "\"employee_name\":\\s*\"([^\"]*)\"",
+            "retryPrompt": "Please provide the employee name.",
+            "skipCondition": null
+          },
+          {
+            "fieldKey": "start_date",
+            "aiQuestion": "What is the start date?",
+            "aiHint": "Extract the start date",
+            "extractionRule": "\"start_date\":\\s*\"([^\"]*)\"",
+            "retryPrompt": "Please provide the start date.",
+            "skipCondition": null
+          },
+          {
+            "fieldKey": "salary",
+            "aiQuestion": "What is the monthly salary?",
+            "aiHint": "Extract the salary amount",
+            "extractionRule": "\"salary\":\\s*\"([^\"]*)\"",
+            "retryPrompt": "Please provide the salary amount.",
+            "skipCondition": null
+          }
+        ],
+        "triggerKeywords": [
+          "contract",
+          "employment"
+        ],
+        "triggerSignal": "AUTOMATION:test-template-001"
+      },
+      "review": {
+        "requiresLawyerReview": true,
+        "signatureRequired": true,
+        "signatureFields": [
+          "employee_name"
+        ]
+      },
+      "createdAt": "2026-04-09T10:04:24.587Z",
+      "updatedAt": "2026-04-09T10:04:24.587Z",
+      "createdBy": "test-admin-001"
+    }
+  ],
+  "automations": [
+    {
+      "id": "253fc803-97f7-4d85-a745-f824d0983391",
+      "templateId": "test-template-001",
+      "templateVersion": 1,
+      "userId": "test-user-001",
+      "status": "IN_PROGRESS",
+      "sessionState": {
+        "extracted": {},
+        "remaining": [
+          "employee_name",
+          "start_date",
+          "salary"
+        ],
+        "currentField": "employee_name",
+        "progress": 0,
+        "messages": [
+          {
+            "role": "user",
+            "content": "test message"
+          },
+          {
+            "role": "assistant",
+            "content": "This is a simulated response from the AI legal assistant. In simulation mode, responses are generated locally without calling the OpenAI API. Please configure your OpenAI API key in system settings for real AI responses."
+          }
+        ]
+      },
+      "createdAt": "2026-04-10T04:25:53.252Z",
+      "updatedAt": "2026-04-10T04:25:53.255Z"
+    }
+  ],
+  "documents": [],
+  "jobs": [
+    {
+      "id": "83653610-7a9a-4bae-8333-f4b932602dfd",
+      "userId": "f4b51630-6cbb-4a2a-a145-9817553d8e17",
+      "title": "Oilaviy muojara",
+      "category": "Family Law",
+      "description": "HA va yo'q chunki Lorem ipsum",
+      "budget": 449994,
+      "urgency": "MEDIUM",
+      "status": "CANCELLED",
+      "attachments": [],
+      "responses": [],
+      "assignedLawyerId": null,
+      "createdAt": "2026-04-10T06:00:52.754Z",
+      "updatedAt": "2026-04-10T06:01:28.296Z"
+    }
+  ],
+  "disputes": [],
+  "conversations": [],
+  "notifications": [],
+  "auditLogs": [
+    {
+      "id": "audit-001",
+      "userId": "system",
+      "action": "TEST_USER_CREATED",
+      "details": {
+        "userId": "test-user-001"
+      },
+      "timestamp": "2026-04-09T10:04:24.461Z",
+      "activeRole": "SYSTEM"
+    },
+    {
+      "id": "audit-template-001",
+      "userId": "test-admin-001",
+      "action": "TEMPLATE_CREATED",
+      "details": {
+        "templateId": "test-template-001",
+        "templateName": "Test Employment Contract",
+        "version": 1
+      },
+      "timestamp": "2026-04-09T10:04:24.587Z",
+      "activeRole": "ADMIN"
+    },
+    {
+      "id": "audit-lawyer-001",
+      "userId": "test-admin-001",
+      "action": "LAWYER_CREATED",
+      "details": {
+        "lawyerId": "test-lawyer-001",
+        "lawyerName": "John Doe"
+      },
+      "timestamp": "2026-04-09T10:04:24.648Z",
+      "activeRole": "ADMIN"
+    },
+    {
+      "id": "db406243-3059-4c30-a728-6b8bdab99c2a",
+      "userId": "test-user-001",
+      "action": "MIDDLEMAN_CHAT",
+      "details": {
+        "templateId": "test-template-001",
+        "sessionId": "253fc803-97f7-4d85-a745-f824d0983391",
+        "tokens": {
+          "input": 50,
+          "output": 45
+        },
+        "latency": 1,
+        "model": "gpt-4o",
+        "action": "continue",
+        "progress": 0
+      },
+      "timestamp": "2026-04-10T04:25:53.255Z",
+      "activeRole": "USER"
+    },
+    {
+      "id": "203cfda6-fef2-4bc3-99ab-add0e1816d33",
+      "userId": "test-user-001",
+      "action": "CHAT_GENERAL",
+      "details": {
+        "sessionId": "d10c4f5f-cbbc-4469-a51a-50e9d20802ab",
+        "tokens": {
+          "input": 50,
+          "output": 45
+        },
+        "latency": 1,
+        "model": "gpt-4o",
+        "messageLength": 5
+      },
+      "timestamp": "2026-04-10T05:25:29.908Z",
+      "activeRole": "USER"
+    },
+    {
+      "id": "ff212d30-52bb-4d10-bdcf-9fa7cff9829d",
+      "userId": "test-user-001",
+      "action": "CHAT_GENERAL",
+      "details": {
+        "sessionId": "cb659720-7193-4a2c-b6d1-2de6227df525",
+        "tokens": {
+          "input": 45,
+          "output": 180
+        },
+        "latency": 1,
+        "model": "gpt-4o",
+        "messageLength": 26
+      },
+      "timestamp": "2026-04-10T05:32:35.448Z",
+      "activeRole": "USER"
+    },
+    {
+      "id": "74b536ae-bc56-44db-847d-d718350c91c3",
+      "userId": "test-user-001",
+      "action": "CHAT_GENERAL",
+      "details": {
+        "sessionId": "d261566d-c453-4150-929f-eeb891d47c3a",
+        "tokens": {
+          "input": 50,
+          "output": 45
+        },
+        "latency": 0,
+        "model": "gpt-4o",
+        "messageLength": 5
+      },
+      "timestamp": "2026-04-10T05:32:39.720Z",
+      "activeRole": "USER"
+    },
+    {
+      "id": "4a1bc011-02cb-4869-889a-57664c96a339",
+      "userId": "test-user-001",
+      "action": "CHAT_GENERAL",
+      "details": {
+        "sessionId": "64d1247f-237a-4516-88ca-fd6dd05fcdcd",
+        "tokens": {
+          "input": 45,
+          "output": 180
+        },
+        "latency": 1,
+        "model": "gpt-4o",
+        "messageLength": 26
+      },
+      "timestamp": "2026-04-10T05:34:28.024Z",
+      "activeRole": "USER"
+    },
+    {
+      "id": "2d3f80c3-fd00-403b-80ce-1777397d103b",
+      "userId": "system",
+      "action": "SYSTEM_CONFIG_UPDATED",
+      "details": {
+        "sections": [
+          "ai",
+          "suggestionRules",
+          "featureFlags"
+        ],
+        "simulationMode": false,
+        "defaultModel": "gpt-5.4-mini"
+      },
+      "timestamp": "2026-04-10T05:34:55.476Z",
+      "activeRole": "ADMIN"
+    },
+    {
+      "id": "8ed8d0e8-82a4-44be-a37c-44bd08078ad0",
+      "userId": "f4b51630-6cbb-4a2a-a145-9817553d8e17",
+      "action": "CHAT_ERROR",
+      "details": {
+        "sessionId": "98c1e8b6-026f-466a-ba6b-5686e954a538",
+        "error": "400 Unsupported parameter: 'max_tokens' is not supported with this model. Use 'max_completion_tokens' instead."
+      },
+      "timestamp": "2026-04-10T05:57:56.867Z",
+      "activeRole": "USER"
+    },
+    {
+      "id": "303fe7b1-df24-4b7b-8540-a3fe111962fc",
+      "userId": "f4b51630-6cbb-4a2a-a145-9817553d8e17",
+      "action": "CHAT_ERROR",
+      "details": {
+        "sessionId": "85821e53-2680-4f20-b13f-c9610f8dc787",
+        "error": "400 Unsupported parameter: 'max_tokens' is not supported with this model. Use 'max_completion_tokens' instead."
+      },
+      "timestamp": "2026-04-10T05:58:45.877Z",
+      "activeRole": "USER"
+    },
+    {
+      "id": "47521e7c-b5df-42d9-9a60-77621fb08238",
+      "userId": "f4b51630-6cbb-4a2a-a145-9817553d8e17",
+      "action": "CHAT_ERROR",
+      "details": {
+        "sessionId": "72883637-4d25-4325-9491-3fe4ce6d1154",
+        "error": "400 Unsupported parameter: 'max_tokens' is not supported with this model. Use 'max_completion_tokens' instead."
+      },
+      "timestamp": "2026-04-10T05:59:06.090Z",
+      "activeRole": "USER"
+    },
+    {
+      "id": "4308059c-df37-48af-bdf5-c73ee58de2e1",
+      "userId": "f4b51630-6cbb-4a2a-a145-9817553d8e17",
+      "action": "CHAT_ERROR",
+      "details": {
+        "sessionId": "68be090d-adcb-4f8d-990d-eeed655d9f88",
+        "error": "400 Unsupported parameter: 'max_tokens' is not supported with this model. Use 'max_completion_tokens' instead."
+      },
+      "timestamp": "2026-04-10T05:59:39.575Z",
+      "activeRole": "USER"
+    },
+    {
+      "id": "f967fe97-be0e-416c-a115-b02263c83f5d",
+      "userId": "f4b51630-6cbb-4a2a-a145-9817553d8e17",
+      "action": "JOB_CREATED",
+      "details": {
+        "jobId": "83653610-7a9a-4bae-8333-f4b932602dfd",
+        "title": "Oilaviy muojara",
+        "budget": 449994,
+        "urgency": "MEDIUM"
+      },
+      "timestamp": "2026-04-10T06:00:52.754Z",
+      "activeRole": "user"
+    },
+    {
+      "id": "324130bd-a44b-404b-a1b6-2778b3058e7f",
+      "userId": "f4b51630-6cbb-4a2a-a145-9817553d8e17",
+      "action": "JOB_CANCELLED",
+      "details": {
+        "jobId": "83653610-7a9a-4bae-8333-f4b932602dfd"
+      },
+      "timestamp": "2026-04-10T06:01:28.296Z",
+      "activeRole": "user"
+    },
+    {
+      "id": "fe8d1c7d-0f12-44bf-9ded-ddfbb7d1fc64",
+      "userId": "test-user",
+      "action": "CHAT_ERROR",
+      "details": {
+        "sessionId": "40066f51-bbad-4709-8131-45217f0ee506",
+        "error": "400 Unsupported parameter: 'max_tokens' is not supported with this model. Use 'max_completion_tokens' instead."
+      },
+      "timestamp": "2026-04-10T06:03:30.148Z",
+      "activeRole": "USER"
+    },
+    {
+      "id": "338a6eb3-acb1-4376-8be4-e02ef5273dfb",
+      "userId": "test-user-123",
+      "action": "CHAT_ERROR",
+      "details": {
+        "sessionId": "79a19e1b-b6a1-4a86-a5c2-0f2587a54e31",
+        "error": "400 Unsupported parameter: 'max_tokens' is not supported with this model. Use 'max_completion_tokens' instead."
+      },
+      "timestamp": "2026-04-10T06:04:18.508Z",
+      "activeRole": "USER"
+    },
+    {
+      "id": "d5f348b8-13ef-4d6e-97d9-aeaac5d099b1",
+      "userId": "test-user-123",
+      "action": "CHAT_ERROR",
+      "details": {
+        "sessionId": "c791c833-e029-4fb3-8e3d-a1efc2e1080f",
+        "error": "400 Unsupported parameter: 'max_tokens' is not supported with this model. Use 'max_completion_tokens' instead."
+      },
+      "timestamp": "2026-04-10T06:05:10.823Z",
+      "activeRole": "USER"
+    },
+    {
+      "id": "75236927-06c2-4b23-b153-2ed7ddd738be",
+      "userId": "test-user-123",
+      "action": "CHAT_ERROR",
+      "details": {
+        "sessionId": "bc9f74da-1acd-4e70-932c-f520c6c780b8",
+        "error": "400 Unsupported parameter: 'max_tokens' is not supported with this model. Use 'max_completion_tokens' instead."
+      },
+      "timestamp": "2026-04-10T06:09:44.589Z",
+      "activeRole": "USER"
+    }
+  ],
+  "systemConfig": {
+    "ai": {
+      "openaiApiKey": "",
+      "defaultModel": "gpt-5.4-mini",
+      "simulationMode": false,
+      "masterPrompt": "Test prompt"
+    },
+    "suggestionRules": {
+      "ratingThreshold": 4,
+      "specializationMatchWeight": 0.5,
+      "onlinePriority": true,
+      "responseTimeWeight": 0.3,
+      "maxSuggestions": 5
+    },
+    "featureFlags": {
+      "enableChat": true,
+      "enableJobs": true,
+      "enableLawyerSearch": true
+    }
+  }
+}

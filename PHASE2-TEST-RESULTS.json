@@ -1,0 +1,54 @@
+{
+  "date": "2026-04-10T05:18:12.361Z",
+  "passed": 9,
+  "failed": 0,
+  "total": 9,
+  "successRate": "100.0%",
+  "results": [
+    {
+      "test": "Server healthy",
+      "status": "PASS",
+      "detail": ""
+    },
+    {
+      "test": "Database connected",
+      "status": "PASS",
+      "detail": ""
+    },
+    {
+      "test": "Collections exist",
+      "status": "PASS",
+      "detail": ""
+    },
+    {
+      "test": "SuperAdmin login works",
+      "status": "PASS",
+      "detail": ""
+    },
+    {
+      "test": "Regular user login works",
+      "status": "PASS",
+      "detail": ""
+    },
+    {
+      "test": "Jobs list accessible",
+      "status": "PASS",
+      "detail": ""
+    },
+    {
+      "test": "SuperAdmin can view documents",
+      "status": "PASS",
+      "detail": ""
+    },
+    {
+      "test": "System config accessible",
+      "status": "PASS",
+      "detail": ""
+    },
+    {
+      "test": "No payment system code found",
+      "status": "PASS",
+      "detail": ""
+    }
+  ]
+}

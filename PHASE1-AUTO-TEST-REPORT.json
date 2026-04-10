@@ -1,0 +1,102 @@
+{
+  "passed": 18,
+  "failed": 4,
+  "warnings": 0,
+  "tests": [
+    {
+      "name": "Server running on port 3000",
+      "status": "PASS"
+    },
+    {
+      "name": "Client running on port 5173",
+      "status": "PASS"
+    },
+    {
+      "name": ".env file exists",
+      "status": "PASS"
+    },
+    {
+      "name": "database.json exists at project root",
+      "status": "PASS"
+    },
+    {
+      "name": "All collections exist",
+      "status": "PASS"
+    },
+    {
+      "name": "systemConfig contains AI config",
+      "status": "PASS"
+    },
+    {
+      "name": "systemConfig contains suggestionRules",
+      "status": "PASS"
+    },
+    {
+      "name": "systemConfig contains featureFlags",
+      "status": "PASS"
+    },
+    {
+      "name": "Array collections are arrays",
+      "status": "PASS"
+    },
+    {
+      "name": "systemConfig is an object",
+      "status": "PASS"
+    },
+    {
+      "name": "SuperAdmin login (no OTP required)",
+      "status": "FAIL",
+      "error": "Login failed: 404"
+    },
+    {
+      "name": "New user login redirects to OTP",
+      "status": "FAIL",
+      "error": "Login failed: 404"
+    },
+    {
+      "name": "OTP verification with valid code",
+      "status": "FAIL",
+      "error": "OTP verification failed: 404"
+    },
+    {
+      "name": "Invalid OTP rejected",
+      "status": "PASS"
+    },
+    {
+      "name": "Existing user login skips name page",
+      "status": "FAIL",
+      "error": "Login failed: 404"
+    },
+    {
+      "name": "Read system config",
+      "status": "PASS"
+    },
+    {
+      "name": "Update API key",
+      "status": "PASS"
+    },
+    {
+      "name": "Update simulation mode",
+      "status": "PASS"
+    },
+    {
+      "name": "Update master prompt",
+      "status": "PASS"
+    },
+    {
+      "name": "Trigger detection with keyword",
+      "status": "PASS"
+    },
+    {
+      "name": "Simulation mode returns mock response",
+      "status": "PASS"
+    },
+    {
+      "name": "Audit logs exist and have correct structure",
+      "status": "PASS"
+    }
+  ],
+  "startTime": "2026-04-10T04:25:52.967Z",
+  "endTime": "2026-04-10T04:25:53.313Z",
+  "duration": 346
+}
