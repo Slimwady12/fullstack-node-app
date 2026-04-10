@@ -170,20 +170,7 @@ export default function LoginPage(): JSX.Element {
             </button>
           </form>
 
-          <div className="mt-6 pt-6 border-t border-navy-800 space-y-3">
-            <button
-              type="button"
-              onClick={() => {
-                setDigits('123456789');
-              }}
-              disabled={loading}
-              className="w-full py-3 bg-emerald-900/30 hover:bg-emerald-900/50 disabled:opacity-50 text-emerald-400 font-medium rounded-xl transition-all duration-200 flex items-center justify-center gap-2 min-h-[52px] focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:ring-offset-2 focus:ring-offset-navy-900 border border-emerald-800/30"
-              aria-label="Login as SuperAdmin"
-            >
-              <Shield className="w-4 h-4" />
-              <span>Login as SuperAdmin</span>
-            </button>
-
+          <div className="mt-6 pt-6 border-t border-navy-800">
             <button
               type="button"
               onClick={handleDevLogin}

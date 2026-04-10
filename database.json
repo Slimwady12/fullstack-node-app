@@ -80,6 +80,33 @@
         "showPhone": false,
         "showEmail": false
       }
+    },
+    {
+      "id": "0a854651-2d12-4c9d-9663-975171e29f89",
+      "phone": "+998431274123",
+      "name": "Ism",
+      "roles": [
+        "user"
+      ],
+      "joinedAt": "2026-04-10T06:17:42.932Z",
+      "savedLawyers": [],
+      "profile": {
+        "email": null,
+        "avatar": null,
+        "language": "uz"
+      },
+      "notifications": {
+        "email": true,
+        "push": true,
+        "quietHours": {
+          "start": "22:00",
+          "end": "07:00"
+        }
+      },
+      "privacy": {
+        "showPhone": false,
+        "showEmail": false
+      }
     }
   ],
   "aiChats": [
@@ -286,6 +313,69 @@
       ],
       "createdAt": "2026-04-10T06:09:42.966Z",
       "updatedAt": "2026-04-10T06:09:42.966Z"
+    },
+    {
+      "id": "7a014be7-3c91-4c7c-b81c-5e54d38a4ae4",
+      "userId": "f4b51630-6cbb-4a2a-a145-9817553d8e17",
+      "title": "Shartnoma qanday tuziladi?",
+      "messages": [
+        {
+          "role": "user",
+          "content": "Shartnoma qanday tuziladi?",
+          "timestamp": "2026-04-10T06:11:39.437Z",
+          "attachments": []
+        },
+        {
+          "role": "ai",
+          "content": "Shartnoma odatda quyidagi tartibda tuziladi:\n\n1. **Tomonlar aniqlanadi**  \n   Kim bilan kim o‘rtasida tuzilayotgani yoziladi: ism-sharif yoki tashkilot nomi, manzil, реквизитlar.\n\n2. **Shartnoma predmeti belgilanadi**  \n   Nima haqda ekanligi aniq ko‘rsatiladi: xizmat, mahsulot, ijara, ish bajarish va hokazo.\n\n3. **Tomonlarning huquq va majburiyatlari yoziladi**  \n   Har bir tomon nima qilishi, nimalarga mas’ul ekani bayon qilinadi.\n\n4. **Narx va to‘lov tartibi ko‘rsatiladi**  \n   Summa, to‘lov muddati, usuli, avans yoki bo‘lib to‘lash shartlari yoziladi.\n\n5. **Muddat belgilanadi**  \n   Shartnoma qachondan qachongacha amal qilishi ko‘rsatiladi.\n\n6. **Javobgarlik shartlari kiritiladi**  \n   Shart bajarilmasa qanday jarima, penya yoki boshqa choralar bo‘lishi yoziladi.\n\n7. **Nizolarni hal qilish tartibi belgilanadi**  \n   Kelishmovchilik bo‘lsa, qayerda va qanday hal qilinishi ko‘rsatiladi.\n\n8. **Boshqa shartlar qo‘shiladi**  \n   Zarur bo‘lsa maxfiylik, bekor qilish tartibi, fors-major kabi bandlar yoziladi.\n\n9. **Imzo va muhr qo‘yiladi**  \n   Tomonlar shartnomani imzolaydi, tashkilot bo‘lsa muhr ham qo‘yilishi mumkin.\n\nAgar xohlasangiz, men sizga **oddiy shartnoma namunasi**ni ham yozib beraman.",
+          "timestamp": "2026-04-10T06:11:43.558Z",
+          "attachments": []
+        }
+      ],
+      "createdAt": "2026-04-10T06:11:39.437Z",
+      "updatedAt": "2026-04-10T06:11:43.558Z"
+    },
+    {
+      "id": "e1e7a0c7-767c-4f68-ba49-0a7d0f6dcfdb",
+      "userId": "test-user-123",
+      "title": "What is contract law in Uzbekistan?",
+      "messages": [
+        {
+          "role": "user",
+          "content": "What is contract law in Uzbekistan?",
+          "timestamp": "2026-04-10T06:12:05.198Z",
+          "attachments": []
+        },
+        {
+          "role": "ai",
+          "content": "Contract law in Uzbekistan is the body of law that governs how agreements are made, interpreted, performed, changed, and terminated in Uzbekistan.\n\nIn general, it covers:\n- **Formation of contracts**: offer, acceptance, required form, and validity\n- **Rights and obligations** of the parties\n- **Performance** of contractual duties\n- **Breach and remedies**: damages, penalties, specific performance, termination\n- **Special contract types**: sale, lease, service, loan, construction, agency, etc.\n\n### Main legal sources\nThe core source is the **Civil Code of the Republic of Uzbekistan**, which contains the general rules on obligations and contracts. Contract relations may also be regulated by:\n- special laws,\n- presidential and government acts,\n- sector-specific regulations,\n- international treaties applicable in Uzbekistan.\n\n### Basic principles\nUzbek contract law generally follows these principles:\n- **Freedom of contract**: parties may decide whether to contract and on what terms, within the law\n- **Good faith and fairness**\n- **Binding force of contracts**: valid contracts must be performed\n- **Equality of parties**\n- **Legality of terms**: contract provisions cannot contradict mandatory law\n\n### Common issues\nA contract may be invalid or unenforceable if, for example:\n- it violates mandatory legal rules,\n- a required written form is missing,\n- there was no proper consent,\n- the subject matter is unlawful or impossible.\n\nIf you want, I can also explain:\n1. **how contracts are formed in Uzbekistan**,  \n2. **how breach is handled**, or  \n3. **the differences between civil and commercial contracts there**.",
+          "timestamp": "2026-04-10T06:12:09.208Z",
+          "attachments": []
+        }
+      ],
+      "createdAt": "2026-04-10T06:12:05.198Z",
+      "updatedAt": "2026-04-10T06:12:09.208Z"
+    },
+    {
+      "id": "1c843120-2200-45df-8417-c73ab1236684",
+      "userId": "0a854651-2d12-4c9d-9663-975171e29f89",
+      "title": "Ko'chmas mulkni ro'yxatdan o'tkazish",
+      "messages": [
+        {
+          "role": "user",
+          "content": "Ko'chmas mulkni ro'yxatdan o'tkazish",
+          "timestamp": "2026-04-10T06:18:00.398Z",
+          "attachments": []
+        },
+        {
+          "role": "ai",
+          "content": "Ko‘chmas mulkni ro‘yxatdan o‘tkazish — bu uy, yer uchastkasi, kvartira yoki boshqa ko‘chmas mulkka bo‘lgan huquqni davlat organlarida rasmiy qayd etish jarayoni.\n\nOdatda jarayon quyidagicha bo‘ladi:\n1. **Hujjatlarni tayyorlash** — oldi-sotdi shartnomasi, kadastr hujjatlari, pasport, to‘lov kvitansiyasi va boshqalar.\n2. **Ariza topshirish** — tegishli ro‘yxatdan o‘tkazuvchi organga yoki davlat xizmatlari orqali.\n3. **Tekshiruv** — hujjatlar va mulk huquqi qonuniyligi ko‘rib chiqiladi.\n4. **Ro‘yxatdan o‘tkazish** — ma’lumotlar reyestrga kiritiladi.\n5. **Guvohnoma yoki elektron tasdiq** — huquq rasmiy tasdiqlanadi.\n\nAgar xohlasangiz, men sizga:\n- **O‘zbekistonda ko‘chmas mulkni ro‘yxatdan o‘tkazish tartibi**,\n- **kerakli hujjatlar ro‘yxati**,\n- yoki **oldi-sotdi bo‘yicha amaliy qadamlar**ni batafsil tushuntirib beraman.",
+          "timestamp": "2026-04-10T06:18:04.187Z",
+          "attachments": []
+        }
+      ],
+      "createdAt": "2026-04-10T06:18:00.398Z",
+      "updatedAt": "2026-04-10T06:18:04.187Z"
     }
   ],
   "lawyers": [
@@ -725,6 +815,57 @@
         "error": "400 Unsupported parameter: 'max_tokens' is not supported with this model. Use 'max_completion_tokens' instead."
       },
       "timestamp": "2026-04-10T06:09:44.589Z",
+      "activeRole": "USER"
+    },
+    {
+      "id": "e4f4138b-fa51-41fb-ac39-32bbd1d0ae1d",
+      "userId": "f4b51630-6cbb-4a2a-a145-9817553d8e17",
+      "action": "CHAT_GENERAL",
+      "details": {
+        "sessionId": "7a014be7-3c91-4c7c-b81c-5e54d38a4ae4",
+        "tokens": {
+          "input": 20,
+          "output": 408
+        },
+        "latency": 4119,
+        "model": "gpt-5.4-mini",
+        "messageLength": 26
+      },
+      "timestamp": "2026-04-10T06:11:43.558Z",
+      "activeRole": "USER"
+    },
+    {
+      "id": "11216586-e509-40d8-9fa1-1cff74d730d7",
+      "userId": "test-user-123",
+      "action": "CHAT_GENERAL",
+      "details": {
+        "sessionId": "e1e7a0c7-767c-4f68-ba49-0a7d0f6dcfdb",
+        "tokens": {
+          "input": 19,
+          "output": 337
+        },
+        "latency": 4010,
+        "model": "gpt-5.4-mini",
+        "messageLength": 35
+      },
+      "timestamp": "2026-04-10T06:12:09.208Z",
+      "activeRole": "USER"
+    },
+    {
+      "id": "eaa88e87-896a-4b47-a015-7caa079aff7f",
+      "userId": "0a854651-2d12-4c9d-9663-975171e29f89",
+      "action": "CHAT_GENERAL",
+      "details": {
+        "sessionId": "1c843120-2200-45df-8417-c73ab1236684",
+        "tokens": {
+          "input": 25,
+          "output": 307
+        },
+        "latency": 3788,
+        "model": "gpt-5.4-mini",
+        "messageLength": 36
+      },
+      "timestamp": "2026-04-10T06:18:04.187Z",
       "activeRole": "USER"
     }
   ],

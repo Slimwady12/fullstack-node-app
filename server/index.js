@@ -5,7 +5,7 @@ import multer from 'multer';
 import path from 'path';
 import { v4 as uuidv4 } from 'uuid';
 import { read, write, transaction, init as dbInit } from './services/jsonDb.js';
-import { callOpenAI } from './services/openaiProxy.js';
+import { callOpenAI, streamOpenAI } from './services/openaiProxy.js';
 import { processMessage as middlemanProcess } from './services/middleman.js';
 
 // Load environment variables from .env file
@@ -328,6 +328,102 @@ app.post('/api/chat/general', async (req, res, next) => {
         model,
       },
     });
+  } catch (error) {
+    next(error);
+  }
+});
+
+// 5b. POST /api/chat/stream - SSE streaming chat endpoint
+app.post('/api/chat/stream', async (req, res, next) => {
+  try {
+    const { userId, message, attachments = [], sessionId } = req.body;
+
+    if (!userId || !message) {
+      return res.status(400).json({ error: 'userId and message are required', code: 'MISSING_FIELDS' });
+    }
+
+    const db = read();
+    const systemConfig = db.systemConfig;
+    const now = new Date().toISOString();
+
+    let chat;
+
+    if (sessionId) {
+      chat = db.aiChats.find(c => c.id === sessionId && c.userId === userId);
+    }
+
+    if (!chat) {
+      chat = {
+        id: sessionId || uuidv4(),
+        userId,
+        title: message.slice(0, 50) + (message.length > 50 ? '...' : ''),
+        messages: [],
+        createdAt: now,
+        updatedAt: now,
+      };
+      db.aiChats.push(chat);
+    }
+
+    const userMessage = {
+      role: 'user',
+      content: message,
+      timestamp: now,
+      attachments,
+    };
+    chat.messages.push(userMessage);
+    await write(db);
+
+    // Set up SSE headers
+    res.setHeader('Content-Type', 'text/event-stream');
+    res.setHeader('Cache-Control', 'no-cache');
+    res.setHeader('Connection', 'keep-alive');
+    res.flushHeaders?.();
+
+    // Send session ID first
+    res.write(`event: session\ndata: ${JSON.stringify({ sessionId: chat.id })}\n\n`);
+
+    const messages = [
+      { role: 'system', content: systemConfig.ai.masterPrompt },
+      ...chat.messages.slice(-20).map(m => ({ role: m.role === 'user' ? 'user' : 'assistant', content: m.content })),
+    ];
+
+    let fullContent = '';
+
+    try {
+      await streamOpenAI({
+        messages,
+        temperature: 0.7,
+        userId,
+        onToken: (token) => {
+          fullContent += token;
+          res.write(`event: token\ndata: ${JSON.stringify({ token })}\n\n`);
+        },
+      });
+
+      // Stream complete
+      const aiMessage = {
+        role: 'ai',
+        content: fullContent,
+        timestamp: new Date().toISOString(),
+        attachments: [],
+      };
+      chat.messages.push(aiMessage);
+      chat.updatedAt = new Date().toISOString();
+
+      auditLog(db, userId, 'CHAT_STREAM', {
+        sessionId: chat.id,
+        messageLength: message.length,
+        responseLength: fullContent.length,
+      });
+
+      await write(db);
+
+      res.write(`event: done\ndata: ${JSON.stringify({ sessionId: chat.id, message: fullContent })}\n\n`);
+    } catch (error) {
+      res.write(`event: error\ndata: ${JSON.stringify({ error: error.message || 'Stream failed', code: error.code || 'STREAM_ERROR' })}\n\n`);
+    }
+
+    res.end();
   } catch (error) {
     next(error);
   }
