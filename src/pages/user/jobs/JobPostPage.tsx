@@ -260,7 +260,7 @@ export default function JobPostPage(): JSX.Element {
                 className={`w-full px-4 py-3 bg-navy-800 border rounded-xl text-white text-sm placeholder-slate-600 focus:outline-none focus:ring-2 focus:ring-emerald-500 resize-y min-h-[120px] ${errors.description ? 'border-red-500' : 'border-navy-700'}`}
                 placeholder={t('jobs.post.descriptionPlaceholder' as any)}
                 aria-invalid={!!errors.description}
-                maxLength={2000}
+                maxLength={20000}
               />
               {errors.description && <p className="mt-1 text-sm text-red-400" role="alert">{errors.description}</p>}
             </div>

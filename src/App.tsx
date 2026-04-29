@@ -181,7 +181,7 @@ export default function App(): JSX.Element {
   return (
     <AppErrorBoundary>
       <LanguageProvider>
-        <BrowserRouter>
+        <BrowserRouter future={{ v7_startTransition: true, v7_relativeSplatPath: true }}>
           <AppRoutes />
         </BrowserRouter>
       </LanguageProvider>

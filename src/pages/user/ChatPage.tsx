@@ -623,7 +623,7 @@ export default function ChatPage(): JSX.Element {
   }
 
   return (
-    <div className="flex flex-col h-[calc(100vh-4rem-3rem)] md:h-[calc(100vh-4rem-5rem)]">
+    <div className="flex flex-col h-full md:h-auto">
       {/* Tab Bar */}
       <div className="flex items-center border-b border-navy-800 bg-navy-900 flex-shrink-0">
         {TABS.map(tab => (
@@ -631,9 +631,12 @@ export default function ChatPage(): JSX.Element {
             key={tab.key}
             type="button"
             onClick={() => setActiveTab(tab.key)}
-            className={`flex items-center gap-2 px-4 py-3 min-h-[48px] text-sm font-medium transition-colors focus:outline-none focus:ring-2 focus:ring-inset focus:ring-emerald-500 relative ${
+            className={`flex items-center gap-2 px-4 py-3 min-h-[48px] text-base font-semibold transition-colors focus:outline-none focus:ring-2 focus:ring-inset focus:ring-emerald-500 relative ${
               activeTab === tab.key ? 'text-emerald-400' : 'text-slate-400 hover:text-slate-200'
-            }`}
+            }`
+            }
+            aria-label={t(tab.labelKey as any)}
+
             aria-selected={activeTab === tab.key}
             role="tab"
           >

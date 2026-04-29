@@ -1787,9 +1787,9 @@ app.put('/api/system/config', async (req, res, next) => {
         });
       }
 
-      if (ai.masterPrompt.length > 2000) {
+      if (ai.masterPrompt.length > 20000) {
         return res.status(400).json({
-          error: 'Master prompt must be less than 2000 characters',
+          error: 'Master prompt must be less than 20000 characters',
           code: 'MASTER_PROMPT_TOO_LONG',
         });
       }

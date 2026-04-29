@@ -18,7 +18,7 @@ import {
   RefreshCw,
 } from 'lucide-react';
 
-const MASTER_PROMPT_MAX = 2000;
+const MASTER_PROMPT_MAX = 20000;
 
 interface AiFormState {
   openaiApiKey: string;
