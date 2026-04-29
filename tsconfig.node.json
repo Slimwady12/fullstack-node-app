@@ -14,5 +14,6 @@
     "resolveJsonModule": true,
     "forceConsistentCasingInFileNames": true
   },
-  "include": ["vite.config.ts", "server/**/*.ts"]
+  "include": ["server/**/*.ts"],
+  "exclude": ["vite.config.ts"]
 }
