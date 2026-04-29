@@ -4,6 +4,7 @@
   "description": "AI-driven legal document automation platform for Uzbekistan",
   "private": true,
   "type": "module",
+  "main": "server/index.js",
   "scripts": {
     "dev": "concurrently \"npm run dev:server\" \"npm run dev:client\"",
     "dev:client": "vite",
