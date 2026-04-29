@@ -1,6 +1,7 @@
 import { useState, useEffect, useCallback, useRef } from 'react';
 import axios from 'axios';
 import { Database } from '../types/db';
+import { getErrorLogger, getUserFriendlyMessage } from '../utils/errorHandler';
 
 interface UseRealtimeSyncResult {
   data: Database | null;
@@ -8,6 +9,7 @@ interface UseRealtimeSyncResult {
   error: string | null;
   refresh: () => void;
   lastSync: string | null;
+  errorDetails: { code?: string; context?: Record<string, unknown> } | null;
 }
 
 const POLL_INTERVAL = 500;
@@ -20,6 +22,7 @@ export function useRealtimeSync(): UseRealtimeSyncResult {
   const [loading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState<string | null>(null);
   const [lastSync, setLastSync] = useState<string | null>(null);
+  const [errorDetails, setErrorDetails] = useState<{ code?: string; context?: Record<string, unknown> } | null>(null);
   const [refreshTrigger, setRefreshTrigger] = useState<number>(0);
 
   const lastModifiedRef = useRef<string | null>(null);
@@ -27,6 +30,7 @@ export function useRealtimeSync(): UseRealtimeSyncResult {
   const pollIntervalRef = useRef<number | null>(null);
   const retryBackoffRef = useRef<number>(POLL_INTERVAL);
   const isMountedRef = useRef<boolean>(true);
+  const errorLoggerRef = useRef(getErrorLogger());
 
   const fetchData = useCallback(async (force: boolean = false) => {
     if (!isMountedRef.current) return;
@@ -57,12 +61,23 @@ export function useRealtimeSync(): UseRealtimeSyncResult {
 
       if (isMountedRef.current) {
         setError(null);
+        setErrorDetails(null);
         setLoading(false);
       }
     } catch (err) {
       if (isMountedRef.current) {
+        // Log error with context for debugging
+        const loggedError = errorLoggerRef.current.log(err, {
+          operation: 'fetchData',
+          force,
+          retryBackoff: retryBackoffRef.current,
+        });
+
         const message = err instanceof Error ? err.message : 'Failed to sync data';
-        setError(message);
+        const code = (err as any)?.code || 'SYNC_ERROR';
+        
+        setError(getUserFriendlyMessage(code) || message);
+        setErrorDetails({ code, context: loggedError.context });
         setLoading(false);
 
         retryBackoffRef.current = Math.min(retryBackoffRef.current * 2, MAX_RETRY_BACKOFF);
@@ -112,5 +127,5 @@ export function useRealtimeSync(): UseRealtimeSyncResult {
     setRefreshTrigger(prev => prev + 1);
   }, []);
 
-  return { data, loading, error, refresh, lastSync };
+  return { data, loading, error, refresh, lastSync, errorDetails };
 }

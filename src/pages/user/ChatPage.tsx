@@ -550,11 +550,12 @@ export default function ChatPage(): JSX.Element {
     setError(null);
   }, []);
 
-  const resumeChat = useCallback((chat: { id: string; title: string }) => {
+  const resumeChat = useCallback((chat: { id: string; title: string; messages?: ChatMessage[] }) => {
     setMode('general');
     setChatId(chat.id);
     setWizardState(null);
-    setMessages([]);
+    // Load existing messages from the chat history
+    setMessages(chat.messages || []);
     setActiveTab('chat');
     setError(null);
     refresh();
@@ -654,6 +655,33 @@ export default function ChatPage(): JSX.Element {
         {/* CHAT TAB */}
         {activeTab === 'chat' && (
           <div className="flex-1 flex flex-col overflow-hidden">
+            {/* New Chat Button in Header */}
+            <div className="bg-navy-900/80 border-b border-navy-700 p-3 flex-shrink-0 flex items-center justify-between">
+              <div className="flex items-center gap-2">
+                <MessageSquare className="w-5 h-5 text-emerald-400" />
+                <h2 className="text-sm font-semibold text-white">
+                  {mode === 'wizard' && wizardState ? wizardState.templateName : t('user.chat.title' as any)}
+                </h2>
+              </div>
+              <button
+                type="button"
+                onClick={() => {
+                  setMessages([]);
+                  setChatId(null);
+                  setWizardState(null);
+                  setMode('general');
+                  setInput('');
+                  setAttachments([]);
+                  setError(null);
+                }}
+                className="flex items-center gap-1.5 px-3 py-1.5 bg-emerald-600/10 hover:bg-emerald-600/20 text-emerald-400 rounded-lg text-xs font-medium transition-colors focus:outline-none focus:ring-2 focus:ring-emerald-500 min-h-[36px]"
+                aria-label="Start new chat"
+              >
+                <Sparkles className="w-3.5 h-3.5" />
+                <span className="hidden sm:inline">{t('chat.sessions.newSession' as any)}</span>
+              </button>
+            </div>
+
             {/* Wizard Header */}
             {mode === 'wizard' && wizardState && (
               <div className="bg-navy-800/80 border-b border-navy-700 p-3 flex-shrink-0">

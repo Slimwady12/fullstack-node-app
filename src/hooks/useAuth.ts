@@ -2,6 +2,7 @@ import { useState, useEffect, useCallback, useMemo } from 'react';
 import * as authService from '../services/auth';
 import { Session } from '../services/auth';
 import { UserRole } from '../types/db';
+import { getErrorLogger, getUserFriendlyMessage } from '../utils/errorHandler';
 
 interface UseAuthResult {
   user: Session | null;
@@ -13,63 +14,105 @@ interface UseAuthResult {
   logout: () => void;
   loading: boolean;
   isAuthenticated: boolean;
+  authError: { code?: string; message?: string } | null;
+  clearAuthError: () => void;
 }
 
 export function useAuth(): UseAuthResult {
   const [user, setUser] = useState<Session | null>(null);
   const [activeRole, setActiveRoleState] = useState<string>('user');
   const [loading, setLoading] = useState<boolean>(true);
+  const [authError, setAuthError] = useState<{ code?: string; message?: string } | null>(null);
+  const errorLoggerRef = useMemo(() => getErrorLogger(), []);
 
   useEffect(() => {
-    const session = authService.getSession();
+    try {
+      const session = authService.getSession();
 
-    if (session) {
-      setUser(session);
-      setActiveRoleState(session.activeRole || session.roles[0] || 'user');
+      if (session) {
+        setUser(session);
+        setActiveRoleState(session.activeRole || session.roles[0] || 'user');
+      }
+
+      setLoading(false);
+    } catch (err) {
+      errorLoggerRef.log(err, { operation: 'useAuth:init' });
+      setLoading(false);
     }
-
-    setLoading(false);
-  }, []);
+  }, [errorLoggerRef]);
 
   const login = useCallback(async (phone: string): Promise<{ requiresOtp: boolean; isSuperAdmin?: boolean }> => {
-    const result = authService.login(phone);
-    return result;
-  }, []);
+    try {
+      setAuthError(null);
+      const result = authService.login(phone);
+      return result;
+    } catch (err) {
+      const loggedError = errorLoggerRef.log(err, { operation: 'login', phone });
+      const code = (err as any)?.code || 'AUTH_FAILED';
+      setAuthError({ code, message: getUserFriendlyMessage(code) || loggedError.message });
+      throw err;
+    }
+  }, [errorLoggerRef]);
 
   const verifyOtp = useCallback(async (phone: string, otp: string): Promise<Session> => {
-    authService.verifyOtp(phone, otp);
+    try {
+      setAuthError(null);
+      authService.verifyOtp(phone, otp);
 
-    const existingSession = await authService.completeLogin(phone);
+      const existingSession = await authService.completeLogin(phone);
 
-    if (existingSession) {
-      setUser(existingSession);
-      setActiveRoleState(existingSession.activeRole || existingSession.roles[0] || 'user');
-      return existingSession;
+      if (existingSession) {
+        setUser(existingSession);
+        setActiveRoleState(existingSession.activeRole || existingSession.roles[0] || 'user');
+        return existingSession;
+      }
+
+      return { phone, requiresName: true } as unknown as Session;
+    } catch (err) {
+      const loggedError = errorLoggerRef.log(err, { operation: 'verifyOtp', phone });
+      const code = (err as any)?.code || 'AUTH_FAILED';
+      setAuthError({ code, message: getUserFriendlyMessage(code) || loggedError.message });
+      throw err;
     }
-
-    return { phone, requiresName: true } as unknown as Session;
-  }, []);
+  }, [errorLoggerRef]);
 
   const handleCreateUser = useCallback(async (phone: string, name: string): Promise<Session> => {
-    const session = await authService.createUser(phone, name);
-    setUser(session);
-    setActiveRoleState(session.activeRole || session.roles[0] || 'user');
-    return session;
-  }, []);
+    try {
+      setAuthError(null);
+      const session = await authService.createUser(phone, name);
+      setUser(session);
+      setActiveRoleState(session.activeRole || session.roles[0] || 'user');
+      return session;
+    } catch (err) {
+      const loggedError = errorLoggerRef.log(err, { operation: 'createUser', phone, name });
+      const code = (err as any)?.code || 'AUTH_FAILED';
+      setAuthError({ code, message: getUserFriendlyMessage(code) || loggedError.message });
+      throw err;
+    }
+  }, [errorLoggerRef]);
 
   const handleLogout = useCallback(() => {
-    authService.logout();
-    setUser(null);
-    setActiveRoleState('user');
-  }, []);
+    try {
+      authService.logout();
+      setUser(null);
+      setActiveRoleState('user');
+      setAuthError(null);
+    } catch (err) {
+      errorLoggerRef.log(err, { operation: 'logout' });
+    }
+  }, [errorLoggerRef]);
 
   const setActiveRole = useCallback((role: string) => {
     if (!user) {
-      throw new Error('Cannot set role: no active user');
+      const error = new Error('Cannot set role: no active user');
+      errorLoggerRef.log(error, { operation: 'setActiveRole', reason: 'no_user' });
+      throw error;
     }
 
     if (!user.roles.includes(role as UserRole)) {
-      throw new Error(`Role '${role}' not available for this user`);
+      const error = new Error(`Role '${role}' not available for this user`);
+      errorLoggerRef.log(error, { operation: 'setActiveRole', role, availableRoles: user.roles });
+      throw error;
     }
 
     try {
@@ -80,10 +123,10 @@ export function useAuth(): UseAuthResult {
         setActiveRoleState(updatedSession.activeRole);
       }
     } catch (error) {
-      console.error('Failed to update active role:', error);
+      errorLoggerRef.log(error, { operation: 'setActiveRole', role });
       throw error;
     }
-  }, [user]);
+  }, [user, errorLoggerRef]);
 
   const isAuthenticated = useMemo(() => {
     return user !== null && user.userId !== undefined && user.userId !== '';
@@ -99,5 +142,7 @@ export function useAuth(): UseAuthResult {
     logout: handleLogout,
     loading,
     isAuthenticated,
+    authError,
+    clearAuthError: () => setAuthError(null),
   };
 }
