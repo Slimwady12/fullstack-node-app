@@ -10,14 +10,8 @@ import {
   X,
   Star,
   MapPin,
-  Clock,
   CheckCircle2,
-  Heart,
-  ExternalLink,
-  Loader2,
   UserX,
-  ChevronDown,
-  ArrowUpDown,
 } from 'lucide-react';
 
 interface Lawyer {
@@ -35,6 +29,9 @@ interface Lawyer {
   online: boolean;
   bio: string;
   images: { profile: string | null };
+  city?: string;
+  country?: string;
+  experienceYears?: number;
 }
 
 const ALL_SPECIALIZATIONS = [
@@ -201,9 +198,17 @@ export default function LawyersPage(): JSX.Element {
   }
 
   return (
-    <div className="space-y-4 max-w-5xl mx-auto">
-      {/* Search & Actions */}
-      <div className="flex items-center gap-2">
+    <div className="p-4 md:p-6 lg:p-8">
+      {/* Header with Search & Filter */}
+      <div className="mb-8 flex flex-col md:flex-row md:items-center justify-between gap-4">
+        <div>
+          <h2 className="text-2xl font-bold text-white">{t('user.lawyers.title' as any)}</h2>
+          <p className="text-slate-400 text-sm mt-1">
+            {t('user.lawyers.foundCount' as any, { count: filteredLawyers.length })}
+          </p>
+        </div>
+        
+        <div className="flex items-center gap-2">
           <div className="relative group">
             <span className="absolute left-3 top-1/2 -translate-y-1/2 text-slate-500 group-focus-within:text-emerald-400 transition-colors">
               <Search className="w-5 h-5" />
@@ -217,35 +222,20 @@ export default function LawyersPage(): JSX.Element {
               aria-label={t('user.lawyers.search' as any)}
             />
           </div>
-        <div className="flex gap-2">
           <button
             type="button"
             onClick={() => setShowFilters(!showFilters)}
-            className={`flex items-center gap-2 px-4 py-3 border rounded-xl min-h-[48px] transition-colors focus:outline-none focus:ring-2 focus:ring-emerald-500 ${
+            className={`flex items-center gap-2 px-4 py-2.5 border rounded-xl transition-colors focus:outline-none focus:ring-2 focus:ring-emerald-500 ${
               hasActiveFilters
                 ? 'bg-emerald-600/10 border-emerald-500/30 text-emerald-400'
-                : 'bg-navy-900 border-navy-800 text-slate-400 hover:border-navy-700'
+                : 'bg-navy-900 border-navy-800 text-slate-400 hover:text-white hover:border-navy-700'
             }`}
             aria-expanded={showFilters}
           >
             <Filter className="w-4 h-4" />
-            <span className="hidden sm:inline">{t('lawyers.search.filters' as any)}</span>
+            <span className="text-sm font-medium">{t('lawyers.search.filters' as any)}</span>
             {hasActiveFilters && <span className="w-2 h-2 bg-emerald-400 rounded-full" />}
           </button>
-          <div className="relative">
-            <select
-              value={sortBy}
-              onChange={(e) => setSortBy(e.target.value as SortOption)}
-              className="appearance-none pl-4 pr-10 py-3 bg-navy-900 border border-navy-800 rounded-xl text-white text-sm focus:outline-none focus:ring-2 focus:ring-emerald-500 min-h-[48px] cursor-pointer"
-              aria-label="Sort by"
-            >
-              <option value="rating">{t('lawyers.search.sortByRating' as any)}</option>
-              <option value="price_asc">{t('lawyers.search.sortByPrice' as any)} ↑</option>
-              <option value="price_desc">{t('lawyers.search.sortByPrice' as any)} ↓</option>
-              <option value="name">{t('common.labels.name' as any)}</option>
-            </select>
-            <ArrowUpDown className="absolute right-3 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-500 pointer-events-none" />
-          </div>
         </div>
       </div>
 
@@ -309,13 +299,7 @@ export default function LawyersPage(): JSX.Element {
         </div>
       )}
 
-      {/* Results Count */}
-      <p className="text-sm text-slate-500">
-        {filteredLawyers.length} {filteredLawyers.length === 1 ? 'lawyer' : 'lawyers'}
-        {search && ` matching "${search}"`}
-      </p>
-
-      {/* Lawyer Cards */}
+      {/* Lawyer Cards Grid */}
       {filteredLawyers.length === 0 ? (
         <div className="text-center py-16 bg-navy-900 border border-navy-800 rounded-xl">
           <UserX className="w-12 h-12 text-slate-600 mx-auto mb-4" />
@@ -323,90 +307,85 @@ export default function LawyersPage(): JSX.Element {
           <p className="text-slate-500 text-sm mt-1">{t('lawyers.search.noResultsSubtitle' as any)}</p>
         </div>
       ) : (
-        <div className="space-y-3">
+        <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6">
           {filteredLawyers.map(lawyer => {
             const isSaved = savedLawyerIds.has(lawyer.id);
             const isSaving = savingIds.has(lawyer.id);
+            const expYears = lawyer.experienceYears || 0;
+            const location = [lawyer.city, lawyer.country].filter(Boolean).join(', ') || 'Unknown location';
 
             return (
               <div
                 key={lawyer.id}
-                className="bg-navy-900 border border-navy-800 rounded-xl p-4 hover:border-navy-700 transition-all"
+                className="bg-navy-900 border border-navy-800 rounded-2xl overflow-hidden hover:border-emerald-500/30 transition-all group"
               >
-                <div className="flex items-start gap-3 mb-3">
-                  <div className="w-12 h-12 rounded-full bg-emerald-600/20 flex items-center justify-center flex-shrink-0 text-emerald-400 font-bold text-lg">
-                    {lawyer.name.charAt(0).toUpperCase()}
-                  </div>
-                  <div className="flex-1 min-w-0">
-                    <div className="flex items-center gap-2">
-                      <h3 className="text-white font-semibold truncate">{lawyer.name}</h3>
-                      {lawyer.verified && (
-                        <CheckCircle2 className="w-4 h-4 text-emerald-400 flex-shrink-0" />
+                <div className="p-6">
+                  {/* Header: Avatar & Rating */}
+                  <div className="flex items-start justify-between mb-4">
+                    <div className="relative">
+                      <div className="w-16 h-16 rounded-2xl bg-emerald-600/20 flex items-center justify-center text-emerald-400 font-bold text-2xl">
+                        {lawyer.name.charAt(0).toUpperCase()}
+                      </div>
+                      {lawyer.online && (
+                        <span className="absolute -bottom-1 -right-1 w-4 h-4 bg-emerald-500 border-2 border-navy-900 rounded-full" />
                       )}
                     </div>
-                    <div className="flex items-center gap-3 mt-1">
-                      <div className="flex items-center gap-1">
-                        <Star className="w-3.5 h-3.5 text-yellow-400 fill-yellow-400" />
-                        <span className="text-sm font-medium text-white">{lawyer.rating.toFixed(1)}</span>
-                        <span className="text-xs text-slate-500">({lawyer.reviewCount})</span>
+                    <div className="flex flex-col items-end">
+                      <div className="flex items-center gap-1 text-emerald-400">
+                        <span className="text-sm font-bold">{lawyer.rating.toFixed(1)}</span>
+                        <Star className="w-3.5 h-3.5 fill-current" />
                       </div>
-                      <div className={`w-2 h-2 rounded-full ${lawyer.online ? 'bg-emerald-400' : 'bg-slate-600'}`} />
+                      <span className="text-xs text-slate-500">{lawyer.reviewCount} reviews</span>
                     </div>
                   </div>
 
-                  <button
-                    type="button"
-                    onClick={() => handleToggleSave(lawyer.id)}
-                    disabled={isSaving}
-                    className={`w-11 h-11 flex items-center justify-center rounded-lg transition-colors min-w-[44px] min-h-[44px] focus:outline-none focus:ring-2 focus:ring-emerald-500 ${
-                      isSaved
-                        ? 'text-red-400 hover:text-red-300 hover:bg-red-500/10'
-                        : 'text-slate-500 hover:text-red-400 hover:bg-navy-800'
-                    }`}
-                    aria-label={isSaved ? 'Unsave lawyer' : 'Save lawyer'}
-                  >
-                    {isSaving ? (
-                      <Loader2 className="w-5 h-5 animate-spin" />
-                    ) : (
-                      <Heart className={`w-5 h-5 ${isSaved ? 'fill-current' : ''}`} />
-                    )}
-                  </button>
-                </div>
-
-                <div className="flex flex-wrap gap-1.5 mb-3">
-                  {lawyer.specializations.slice(0, 4).map(spec => (
-                    <span key={spec} className="px-2 py-1 bg-navy-800 text-slate-400 text-xs rounded-md">
-                      {spec}
-                    </span>
-                  ))}
-                  {lawyer.specializations.length > 4 && (
-                    <span className="px-2 py-1 bg-navy-800 text-slate-500 text-xs rounded-md">
-                      +{lawyer.specializations.length - 4}
-                    </span>
-                  )}
-                </div>
-
-                <div className="flex items-center justify-between pt-3 border-t border-navy-800">
-                  <div className="flex items-center gap-4 text-xs text-slate-500">
-                    <span className="text-emerald-400 font-semibold">
-                      {lawyer.price.toLocaleString()} UZS
-                    </span>
-                    <span className="flex items-center gap-1">
-                      <Clock className="w-3 h-3" />
-                      {lawyer.responseTime}
-                    </span>
-                    <span className="hidden sm:inline">
-                      {lawyer.languages.join(', ')}
-                    </span>
+                  {/* Name & Specialization */}
+                  <div>
+                    <div className="flex items-center gap-2 mb-1">
+                      <h3 className="text-white font-bold text-lg group-hover:text-emerald-400 transition-colors truncate">
+                        {lawyer.name}
+                      </h3>
+                      {lawyer.verified && (
+                        <CheckCircle2 className="w-4 h-4 text-blue-400 flex-shrink-0" />
+                      )}
+                    </div>
+                    <p className="text-emerald-400 text-sm font-medium mb-3">
+                      {lawyer.specializations[0] || 'General Practice'} • {expYears} years experience
+                    </p>
+                    
+                    {/* Location & Price */}
+                    <div className="space-y-2 mb-6">
+                      <div className="flex items-center gap-2 text-slate-400 text-sm">
+                        <MapPin className="w-3.5 h-3.5" />
+                        {location}
+                      </div>
+                      <div className="flex items-center gap-2 text-slate-400 text-sm">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" className="lucide lucide-coins">
+                          <circle cx="12" cy="12" r="10"/>
+                          <path d="M16 8h-6a2 2 0 1 0 0 4h4a2 2 0 1 1 0 4H8"/>
+                          <path d="M12 18V6"/>
+                        </svg>
+                        from {lawyer.price.toLocaleString()} UZS / consultation
+                      </div>
+                    </div>
                   </div>
-                  <button
-                    type="button"
-                    onClick={() => navigate(`/user/lawyers/${lawyer.id}`)}
-                    className="flex items-center gap-1.5 px-4 py-2.5 bg-emerald-600/10 hover:bg-emerald-600/20 text-emerald-400 rounded-lg text-sm font-medium min-h-[44px] transition-colors focus:outline-none focus:ring-2 focus:ring-emerald-500"
-                  >
-                    <span>{t('user.lawyers.viewProfile' as any)}</span>
-                    <ExternalLink className="w-3.5 h-3.5" />
-                  </button>
+
+                  {/* Action Buttons */}
+                  <div className="grid grid-cols-2 gap-3">
+                    <button
+                      type="button"
+                      onClick={() => navigate(`/user/lawyers/${lawyer.id}`)}
+                      className="bg-navy-800 text-white text-sm font-semibold py-2.5 rounded-xl hover:bg-navy-700 transition-colors"
+                    >
+                      Profile
+                    </button>
+                    <button
+                      type="button"
+                      className="bg-emerald-600 text-white text-sm font-semibold py-2.5 rounded-xl hover:bg-emerald-500 shadow-lg shadow-emerald-900/20 transition-all"
+                    >
+                      Message
+                    </button>
+                  </div>
                 </div>
               </div>
             );
