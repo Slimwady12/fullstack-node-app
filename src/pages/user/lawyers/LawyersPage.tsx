@@ -203,18 +203,20 @@ export default function LawyersPage(): JSX.Element {
   return (
     <div className="space-y-4 max-w-5xl mx-auto">
       {/* Search & Actions */}
-      <div className="flex flex-col sm:flex-row gap-3">
-        <div className="relative flex-1">
-          <Search className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-slate-500 pointer-events-none" />
-          <input
-            type="text"
-            value={search}
-            onChange={(e) => setSearch(e.target.value)}
-            placeholder={t('user.lawyers.searchPlaceholder' as any)}
-            className="w-full pl-12 pr-4 py-3 bg-navy-900 border border-navy-800 rounded-xl text-white text-sm placeholder-slate-600 focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-transparent min-h-[48px]"
-            aria-label={t('user.lawyers.search' as any)}
-          />
-        </div>
+      <div className="flex items-center gap-2">
+          <div className="relative group">
+            <span className="absolute left-3 top-1/2 -translate-y-1/2 text-slate-500 group-focus-within:text-emerald-400 transition-colors">
+              <Search className="w-5 h-5" />
+            </span>
+            <input
+              type="text"
+              value={search}
+              onChange={(e) => setSearch(e.target.value)}
+              placeholder={t('user.lawyers.searchPlaceholder' as any)}
+              className="bg-navy-900 border border-navy-800 text-white text-sm rounded-xl py-2.5 pl-10 pr-4 w-full md:w-64 focus:outline-none focus:ring-2 focus:ring-emerald-500/50 transition-all"
+              aria-label={t('user.lawyers.search' as any)}
+            />
+          </div>
         <div className="flex gap-2">
           <button
             type="button"
