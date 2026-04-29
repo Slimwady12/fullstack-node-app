@@ -35,7 +35,7 @@ import JobDetailPage from './pages/user/jobs/JobDetailPage';
 import MessagesPage from './pages/user/messages/MessagesPage';
 import SettingsPage from './pages/user/settings/SettingsPage';
 
-class AppErrorBoundary extends React.Component<{ children: ReactNode }, { hasError: boolean; error: Error | null }> {
+class AppErrorBoundary extends React.Component<{ children: ReactNode }, { hasError: boolean; error: Error | null; errorInfo?: React.ErrorInfo }> {
   constructor(props: { children: ReactNode }) {
     super(props);
     this.state = { hasError: false, error: null };
@@ -45,6 +45,35 @@ class AppErrorBoundary extends React.Component<{ children: ReactNode }, { hasErr
     return { hasError: true, error };
   }
 
+  componentDidCatch(error: Error, errorInfo: React.ErrorInfo) {
+    // Log error with component stack for debugging
+    console.error('🔴 App Error Boundary Caught:', {
+      error: error.message,
+      stack: error.stack,
+      componentStack: errorInfo.componentStack,
+    });
+
+    // Store in sessionStorage for cross-session debugging
+    try {
+      const errorData = {
+        message: error.message,
+        stack: error.stack,
+        componentStack: errorInfo.componentStack,
+        timestamp: new Date().toISOString(),
+        url: window.location.href,
+      };
+      
+      const existing = sessionStorage.getItem('app_critical_errors');
+      const errors = existing ? JSON.parse(existing) : [];
+      errors.push(errorData);
+      sessionStorage.setItem('app_critical_errors', JSON.stringify(errors.slice(-20)));
+    } catch {
+      // Ignore storage errors
+    }
+
+    this.setState({ errorInfo });
+  }
+
   render() {
     if (this.state.hasError) {
       return (
@@ -52,13 +81,33 @@ class AppErrorBoundary extends React.Component<{ children: ReactNode }, { hasErr
           <div className="bg-navy-900 border border-red-500/30 rounded-2xl p-8 max-w-md text-center">
             <h1 className="text-xl font-bold text-white mb-2">Something went wrong</h1>
             <p className="text-slate-400 text-sm mb-4">{this.state.error?.message || 'An unexpected error occurred'}</p>
-            <button
-              type="button"
-              onClick={() => window.location.reload()}
-              className="px-6 py-3 bg-emerald-600 hover:bg-emerald-700 text-white font-semibold rounded-xl min-h-[48px] transition-colors"
-            >
-              Reload Page
-            </button>
+            {process.env.NODE_ENV === 'development' && this.state.error?.stack && (
+              <details className="text-left mb-4">
+                <summary className="text-xs text-slate-500 cursor-pointer">Error Details (Dev)</summary>
+                <pre className="mt-2 p-3 bg-navy-950 rounded-lg text-xs text-red-400 overflow-auto max-h-48">
+                  {this.state.error.stack}
+                </pre>
+              </details>
+            )}
+            <div className="flex gap-2 justify-center">
+              <button
+                type="button"
+                onClick={() => window.location.reload()}
+                className="px-6 py-3 bg-emerald-600 hover:bg-emerald-700 text-white font-semibold rounded-xl min-h-[48px] transition-colors"
+              >
+                Reload Page
+              </button>
+              <button
+                type="button"
+                onClick={() => {
+                  sessionStorage.removeItem('app_critical_errors');
+                  window.location.reload();
+                }}
+                className="px-6 py-3 bg-navy-700 hover:bg-navy-600 text-white font-semibold rounded-xl min-h-[48px] transition-colors"
+              >
+                Clear & Reload
+              </button>
+            </div>
           </div>
         </div>
       );
