@@ -1,3 +1,4 @@
+import { apiClient } from '../../lib/api';
 import { useState, useCallback, useMemo, useEffect } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import { useLanguage } from '../../../i18n/LanguageProvider';
@@ -172,7 +173,7 @@ export default function LawyerProfilePage(): JSX.Element {
     setReviewSuccess(false);
 
     try {
-      const response = await axios.post('/api/reviews', {
+      const response = await apiClient.post('/api/reviews', {
         lawyerId: id,
         userId: user.userId,
         name: user.name,

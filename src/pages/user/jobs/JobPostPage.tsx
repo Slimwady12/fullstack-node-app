@@ -1,3 +1,4 @@
+import { apiClient } from '../../lib/api';
 import { useState, useCallback, FormEvent, ChangeEvent } from 'react';
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
@@ -106,7 +107,7 @@ export default function JobPostPage(): JSX.Element {
         const formData = new FormData();
         formData.append('file', file);
 
-        const response = await axios.post('/api/upload', formData, {
+        const response = await apiClient.post('/api/upload', formData, {
           headers: { 'Content-Type': 'multipart/form-data' },
         });
 

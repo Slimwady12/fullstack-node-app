@@ -1,3 +1,4 @@
+import { apiClient } from '../../lib/api';
 import { useState, useCallback, useEffect, FormEvent, ChangeEvent } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useLanguage } from '../../../i18n/LanguageProvider';
@@ -119,7 +120,7 @@ export default function SettingsPage(): JSX.Element {
     try {
       const formData = new FormData();
       formData.append('file', file);
-      const res = await axios.post('/api/upload', formData, { headers: { 'Content-Type': 'multipart/form-data' } });
+      const res = await apiClient.post('/api/upload', formData, { headers: { 'Content-Type': 'multipart/form-data' } });
       if (res.data.success) {
         await transaction<void>((db) => {
           const idx = db.users.findIndex(u => u.id === user.userId);
@@ -166,7 +167,7 @@ export default function SettingsPage(): JSX.Element {
     setDeleteError(null);
 
     try {
-      await axios.delete(`/api/users/${user.userId}`, {
+      await apiClient.delete(`/api/users/${user.userId}`, {
         data: { userId: user.userId },
       });
       auth.logout();

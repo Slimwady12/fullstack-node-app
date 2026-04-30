@@ -1,3 +1,4 @@
+import { apiClient } from '../../lib/api';
 import { useState, useCallback, useMemo, useEffect, FormEvent, ChangeEvent } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import { useLanguage } from '../../i18n/LanguageProvider';
@@ -344,7 +345,7 @@ export default function TemplateBuilderPage(): JSX.Element {
       const formData = new FormData();
       formData.append('file', file);
 
-      const response = await axios.post('/api/upload', formData, {
+      const response = await apiClient.post('/api/upload', formData, {
         headers: { 'Content-Type': 'multipart/form-data' },
       });
 
@@ -472,7 +473,7 @@ export default function TemplateBuilderPage(): JSX.Element {
     setAiGenerating(fieldKey);
 
     try {
-      const response = await axios.post('/api/middleman/chat', {
+      const response = await apiClient.post('/api/middleman/chat', {
         userId: 'admin',
         templateId: template.id,
         message: `Generate an AI question, hint, and extraction rule for a field called "${field.label || fieldKey}" of type "${field.type}". Return JSON: {"aiQuestion": "...", "aiHint": "...", "extractionRule": "..."}`,
@@ -1281,7 +1282,7 @@ function TestFlowModal({ template, onClose }: TestFlowModalProps): JSX.Element {
     setMessage('');
 
     try {
-      const response = await axios.post('/api/middleman/chat', {
+      const response = await apiClient.post('/api/middleman/chat', {
         userId: 'admin',
         templateId: template.id,
         message: userMsg,
