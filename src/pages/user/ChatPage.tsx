@@ -623,27 +623,25 @@ export default function ChatPage(): JSX.Element {
   }
 
   return (
-    <div className="flex flex-col h-full md:h-auto">
-      {/* Tab Bar */}
-      <div className="flex items-center border-b border-navy-800 bg-navy-900 flex-shrink-0">
+    <div className="flex flex-col h-screen bg-navy-900">
+      {/* Tab Bar - Mobile Optimized */}
+      <div className="flex items-center border-b border-navy-800 bg-navy-900/95 backdrop-blur-sm flex-shrink-0 sticky top-0 z-20">
         {TABS.map(tab => (
           <button
             key={tab.key}
             type="button"
             onClick={() => setActiveTab(tab.key)}
-            className={`flex items-center gap-2 px-4 py-3 min-h-[48px] text-base font-semibold transition-colors focus:outline-none focus:ring-2 focus:ring-inset focus:ring-emerald-500 relative ${
-              activeTab === tab.key ? 'text-emerald-400' : 'text-slate-400 hover:text-slate-200'
-            }`
-            }
+            className={`flex-1 flex items-center justify-center gap-1.5 sm:gap-2 px-2 sm:px-4 py-3 sm:py-3 text-xs sm:text-base font-semibold transition-all focus:outline-none focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-emerald-500 relative ${
+              activeTab === tab.key ? 'text-emerald-400 bg-emerald-500/5' : 'text-slate-400 hover:text-slate-200 hover:bg-navy-800/50'
+            }`}
             aria-label={t(tab.labelKey as any)}
-
             aria-selected={activeTab === tab.key}
             role="tab"
           >
             {tab.icon}
-            <span className="hidden sm:inline">{t(tab.labelKey as any)}</span>
+            <span className="hidden xs:inline">{t(tab.labelKey as any)}</span>
             {activeTab === tab.key && (
-              <span className="absolute bottom-0 left-2 right-2 h-0.5 bg-emerald-400 rounded-full" />
+              <span className="absolute bottom-0 left-0 right-0 h-0.5 bg-gradient-to-r from-transparent via-emerald-400 to-transparent" />
             )}
           </button>
         ))}
@@ -653,23 +651,23 @@ export default function ChatPage(): JSX.Element {
       <div className="flex-1 overflow-hidden flex flex-col">
         {/* CHAT TAB */}
         {activeTab === 'chat' && (
-          <div className="flex-1 flex flex-col overflow-hidden">
-            {/* Wizard Header */}
+          <div className="flex-1 flex flex-col overflow-hidden relative">
+            {/* Wizard Header - Mobile Optimized */}
             {mode === 'wizard' && wizardState && (
-              <div className="bg-navy-800/80 border-b border-navy-700 p-3 flex-shrink-0">
-                <div className="flex items-center justify-between mb-2">
-                  <div className="flex items-center gap-2 min-w-0">
+              <div className="bg-navy-800/95 backdrop-blur-sm border-b border-navy-700 p-3 sm:p-4 flex-shrink-0">
+                <div className="flex items-center justify-between gap-2 mb-2">
+                  <div className="flex items-center gap-2 min-w-0 flex-1">
                     <button
                       type="button"
                       onClick={exitWizard}
-                      className="w-8 h-8 flex items-center justify-center rounded-lg text-slate-400 hover:text-white hover:bg-navy-700 flex-shrink-0 min-w-[44px] min-h-[44px] transition-colors focus:outline-none focus:ring-2 focus:ring-emerald-500"
+                      className="w-9 h-9 sm:w-10 sm:h-10 flex items-center justify-center rounded-lg text-slate-400 hover:text-white hover:bg-navy-700 flex-shrink-0 transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-emerald-500"
                       aria-label="Exit wizard"
                     >
-                      <ArrowLeft className="w-4 h-4" />
+                      <ArrowLeft className="w-5 h-5" />
                     </button>
-                    <div className="min-w-0">
+                    <div className="min-w-0 flex-1">
                       <p className="text-sm font-medium text-white truncate">{wizardState.templateName}</p>
-                      <p className="text-xs text-slate-500">
+                      <p className="text-xs text-slate-500 truncate">
                         {wizardState.remaining.length > 0
                           ? `${wizardState.remaining.length} fields remaining`
                           : 'All fields collected'
@@ -678,9 +676,9 @@ export default function ChatPage(): JSX.Element {
                     </div>
                   </div>
                   {wizardState.action === 'complete' && (
-                    <span className="flex items-center gap-1 px-2.5 py-1 bg-emerald-500/10 text-emerald-400 rounded-lg text-xs font-medium flex-shrink-0">
+                    <span className="flex items-center gap-1 px-2 py-1 bg-emerald-500/10 text-emerald-400 rounded-lg text-xs font-medium flex-shrink-0 whitespace-nowrap">
                       <CheckCircle2 className="w-3 h-3" />
-                      Complete
+                      <span className="hidden sm:inline">Complete</span>
                     </span>
                   )}
                 </div>
@@ -688,18 +686,18 @@ export default function ChatPage(): JSX.Element {
                 {/* Progress Bar */}
                 <div className="w-full h-2 bg-navy-900 rounded-full overflow-hidden mb-2">
                   <div
-                    className="h-full bg-emerald-500 rounded-full transition-all duration-500"
+                    className="h-full bg-gradient-to-r from-emerald-600 to-emerald-400 rounded-full transition-all duration-500"
                     style={{ width: `${wizardState.progress}%` }}
                   />
                 </div>
 
-                {/* Extracted Fields */}
+                {/* Extracted Fields - Scrollable on mobile */}
                 {Object.keys(wizardState.extracted).length > 0 && (
-                  <div className="flex flex-wrap gap-1.5">
+                  <div className="flex flex-wrap gap-1.5 max-h-16 overflow-y-auto">
                     {Object.entries(wizardState.extracted).map(([key, value]) => (
-                      <span key={key} className="inline-flex items-center gap-1 px-2 py-0.5 bg-emerald-500/10 text-emerald-400 rounded-md text-xs">
-                        <CheckCircle2 className="w-3 h-3" />
-                        <span className="truncate max-w-32">{key}: {String(value).slice(0, 20)}</span>
+                      <span key={key} className="inline-flex items-center gap-1 px-2 py-0.5 bg-emerald-500/10 text-emerald-400 rounded-md text-xs whitespace-nowrap">
+                        <CheckCircle2 className="w-3 h-3 flex-shrink-0" />
+                        <span className="truncate max-w-[120px]">{key}: {String(value).slice(0, 20)}</span>
                       </span>
                     ))}
                   </div>
@@ -707,7 +705,7 @@ export default function ChatPage(): JSX.Element {
 
                 {/* Current Field Hint */}
                 {currentFieldQuestion && wizardState.currentField && (
-                  <div className="mt-2 p-2 bg-navy-900 rounded-lg border border-navy-700">
+                  <div className="mt-2 p-2.5 bg-navy-900/80 rounded-lg border border-navy-700">
                     <p className="text-xs text-slate-400">
                       <span className="text-emerald-400 font-medium">Current:</span> {currentFieldQuestion.aiQuestion}
                     </p>
@@ -716,10 +714,10 @@ export default function ChatPage(): JSX.Element {
               </div>
             )}
 
-            {/* Messages */}
-            <div className="flex-1 overflow-y-auto p-4 space-y-4">
+            {/* Messages - Mobile Optimized */}
+            <div className="flex-1 overflow-y-auto p-3 sm:p-4 space-y-3 sm:space-y-4">
               {messages.length === 0 && mode === 'general' && (
-                <div className="flex flex-col items-center justify-center h-full text-center">
+                <div className="flex flex-col items-center justify-center h-full text-center px-4">
                   {/* AI Status Badge */}
                   <div className={`flex items-center gap-2 px-3 py-1.5 rounded-full text-xs font-mono mb-4 ${
                     hasApiKeyInDb
@@ -736,11 +734,11 @@ export default function ChatPage(): JSX.Element {
                     </span>
                   </div>
 
-                  <Sparkles className="w-16 h-16 text-slate-700 mb-4" />
-                  <h3 className="text-lg font-semibold text-white mb-2">{t('user.chat.title' as any)}</h3>
+                  <Sparkles className="w-12 h-12 sm:w-16 sm:h-16 text-slate-700 mb-4" />
+                  <h3 className="text-base sm:text-lg font-semibold text-white mb-2">{t('user.chat.title' as any)}</h3>
                   <p className="text-slate-500 text-sm max-w-sm">{t('chat.wizard.welcomeSubtitle' as any)}</p>
 
-                  {/* Quick Suggestions */}
+                  {/* Quick Suggestions - Better mobile grid */}
                   <div className="mt-6 grid grid-cols-1 sm:grid-cols-2 gap-2 w-full max-w-md">
                     {[
                       { key: 'chat.suggestions.contract', msg: t('chat.suggestions.contract' as any) },
@@ -752,7 +750,7 @@ export default function ChatPage(): JSX.Element {
                         key={suggestion.key}
                         type="button"
                         onClick={() => { setInput(suggestion.msg); inputRef.current?.focus(); }}
-                        className="px-4 py-3 bg-navy-800 hover:bg-navy-700 border border-navy-700 hover:border-emerald-500/30 rounded-xl text-sm text-slate-300 hover:text-white transition-all min-h-[48px] text-left focus:outline-none focus:ring-2 focus:ring-emerald-500"
+                        className="px-4 py-3 bg-navy-800/80 hover:bg-navy-700 border border-navy-700 hover:border-emerald-500/30 rounded-xl text-sm text-slate-300 hover:text-white transition-all min-h-[48px] text-left focus:outline-none focus-visible:ring-2 focus-visible:ring-emerald-500 active:scale-[0.98]"
                       >
                         {suggestion.msg}
                       </button>
@@ -762,10 +760,10 @@ export default function ChatPage(): JSX.Element {
               )}
 
               {messages.length === 0 && mode === 'wizard' && (
-                <div className="flex flex-col items-center justify-center h-full text-center">
-                  <FileText className="w-16 h-16 text-slate-700 mb-4" />
-                  <h3 className="text-lg font-semibold text-white mb-2">Document Assistant</h3>
-                  <p className="text-slate-500 text-sm">
+                <div className="flex flex-col items-center justify-center h-full text-center px-4">
+                  <FileText className="w-12 h-12 sm:w-16 sm:h-16 text-slate-700 mb-4" />
+                  <h3 className="text-base sm:text-lg font-semibold text-white mb-2">Document Assistant</h3>
+                  <p className="text-slate-500 text-sm px-4">
                     {wizardState ? `Filling out: ${wizardState.templateName}` : 'Select a session to continue'}
                   </p>
                 </div>
@@ -777,16 +775,16 @@ export default function ChatPage(): JSX.Element {
                   className={`flex ${msg.role === 'user' ? 'justify-end' : msg.role === 'system' ? 'justify-center' : 'justify-start'}`}
                 >
                   {msg.role === 'system' ? (
-                    <div className="max-w-md px-4 py-2 bg-yellow-500/10 border border-yellow-500/20 rounded-xl text-yellow-400 text-sm text-center">
+                    <div className="max-w-xs sm:max-w-md px-4 py-2 bg-yellow-500/10 border border-yellow-500/20 rounded-xl text-yellow-400 text-sm text-center">
                       {msg.content}
                     </div>
                   ) : (
-                    <div className={`max-w-[85%] md:max-w-[70%] ${msg.role === 'user' ? 'order-1' : ''}`}>
+                    <div className={`max-w-[88%] sm:max-w-[75%] md:max-w-[65%] ${msg.role === 'user' ? 'order-1' : ''}`}>
                       <div
-                        className={`px-4 py-3 rounded-2xl text-sm leading-relaxed ${
+                        className={`px-4 py-3 rounded-2xl text-sm leading-relaxed shadow-sm ${
                           msg.role === 'user'
-                            ? 'bg-emerald-600 text-white rounded-br-md'
-                            : 'bg-navy-800 text-slate-200 rounded-bl-md border border-navy-700'
+                            ? 'bg-gradient-to-br from-emerald-600 to-emerald-700 text-white rounded-br-md'
+                            : 'bg-navy-800/95 backdrop-blur-sm text-slate-200 rounded-bl-md border border-navy-700'
                         }`}
                       >
                         <div className="whitespace-pre-wrap break-words">
@@ -797,7 +795,7 @@ export default function ChatPage(): JSX.Element {
                           )}
                         </div>
 
-                        {/* Attachments */}
+                        {/* Attachments - Mobile friendly */}
                         {msg.attachments && msg.attachments.length > 0 && (
                           <div className="flex flex-wrap gap-2 mt-3">
                             {msg.attachments.map((filename, i) => (
@@ -806,16 +804,16 @@ export default function ChatPage(): JSX.Element {
                                 href={`/uploads/${filename}`}
                                 target="_blank"
                                 rel="noopener noreferrer"
-                                className="flex items-center gap-1.5 px-2.5 py-1.5 bg-black/20 rounded-lg text-xs hover:bg-black/30 transition-colors min-h-[36px]"
+                                className="flex items-center gap-1.5 px-2.5 py-1.5 bg-black/20 hover:bg-black/30 rounded-lg text-xs transition-colors min-h-[36px] max-w-full"
                               >
-                                <FileText className="w-3 h-3" />
-                                <span className="truncate max-w-32">{filename}</span>
+                                <FileText className="w-3 h-3 flex-shrink-0" />
+                                <span className="truncate">{filename}</span>
                               </a>
                             ))}
                           </div>
                         )}
                       </div>
-                      <p className={`text-xs text-slate-600 mt-1 ${msg.role === 'user' ? 'text-right' : ''}`}>
+                      <p className={`text-[10px] text-slate-600 mt-1 ${msg.role === 'user' ? 'text-right' : ''}`}>
                         {new Date(msg.timestamp).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
                       </p>
                     </div>
@@ -823,41 +821,41 @@ export default function ChatPage(): JSX.Element {
                 </div>
               ))}
 
-              {/* Typing Indicator */}
+              {/* Typing Indicator - Mobile Optimized */}
               {sending && (
                 <div className="flex justify-start">
-                  <div className="bg-navy-800 border border-navy-700 px-4 py-3 rounded-2xl rounded-bl-md flex items-center gap-2">
+                  <div className="bg-navy-800/95 backdrop-blur-sm border border-navy-700 px-4 py-3 rounded-2xl rounded-bl-md flex items-center gap-2 shadow-sm">
                     <Loader2 className="w-4 h-4 animate-spin text-emerald-400" />
                     <span className="text-sm text-slate-400">{t('chat.input.typing' as any)}</span>
                   </div>
                 </div>
               )}
 
-              {/* Lawyer Suggestions */}
+              {/* Lawyer Suggestions - Mobile horizontal scroll */}
               {wizardState?.suggestedLawyers && wizardState.suggestedLawyers.length > 0 && showSuggestions && (
-                <div className="bg-navy-800/50 border border-navy-700 rounded-xl p-4">
+                <div className="bg-navy-800/50 backdrop-blur-sm border border-navy-700 rounded-xl p-3 sm:p-4 mx-[-0.75rem] sm:mx-0">
                   <div className="flex items-center justify-between mb-3">
                     <h4 className="text-sm font-medium text-white">{t('chat.suggestions.title' as any)}</h4>
                     <button
                       type="button"
                       onClick={() => setShowSuggestions(false)}
-                      className="w-8 h-8 flex items-center justify-center rounded-lg text-slate-400 hover:text-white hover:bg-navy-700 min-w-[44px] min-h-[44px] transition-colors focus:outline-none focus:ring-2 focus:ring-emerald-500"
+                      className="w-8 h-8 flex items-center justify-center rounded-lg text-slate-400 hover:text-white hover:bg-navy-700 transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-emerald-500"
                       aria-label="Dismiss suggestions"
                     >
                       <X className="w-4 h-4" />
                     </button>
                   </div>
-                  <div className="flex gap-3 overflow-x-auto pb-2 -mx-1 px-1 snap-x snap-mandatory">
+                  <div className="flex gap-3 overflow-x-auto pb-2 -mx-1 px-1 snap-x snap-mandatory scrollbar-thin scrollbar-thumb-navy-600 scrollbar-track-transparent">
                     {wizardState.suggestedLawyers.map(lawyer => (
-                      <div key={lawyer.id} className="flex-shrink-0 w-56 snap-start bg-navy-900 rounded-lg p-3 border border-navy-700">
+                      <div key={lawyer.id} className="flex-shrink-0 w-[240px] sm:w-56 snap-start bg-navy-900/95 rounded-lg p-3 border border-navy-700 shadow-sm">
                         <div className="flex items-center gap-2 mb-2">
-                          <div className="w-8 h-8 rounded-full bg-emerald-600/20 flex items-center justify-center text-emerald-400 font-bold text-sm flex-shrink-0">
+                          <div className="w-10 h-10 rounded-full bg-emerald-600/20 flex items-center justify-center text-emerald-400 font-bold text-base flex-shrink-0">
                             {lawyer.name.charAt(0).toUpperCase()}
                           </div>
                           <div className="min-w-0 flex-1">
                             <p className="text-sm font-medium text-white truncate">{lawyer.name}</p>
-                            <div className="flex items-center gap-1">
-                              <Star className="w-3 h-3 text-yellow-400 fill-yellow-400" />
+                            <div className="flex items-center gap-1 flex-wrap">
+                              <Star className="w-3 h-3 text-yellow-400 fill-yellow-400 flex-shrink-0" />
                               <span className="text-xs text-white">{lawyer.rating.toFixed(1)}</span>
                               <span className="text-xs text-slate-500">• {Math.round(lawyer.score * 100)}%</span>
                             </div>
@@ -865,15 +863,15 @@ export default function ChatPage(): JSX.Element {
                         </div>
                         <div className="flex flex-wrap gap-1 mb-2">
                           {lawyer.specializations.slice(0, 2).map(spec => (
-                            <span key={spec} className="px-1.5 py-0.5 bg-navy-800 text-slate-400 text-[10px] rounded truncate max-w-24">{spec}</span>
+                            <span key={spec} className="px-1.5 py-0.5 bg-navy-800 text-slate-400 text-[10px] rounded truncate max-w-[80px]">{spec}</span>
                           ))}
                         </div>
                         <button
                           type="button"
                           onClick={() => navigate(`/user/lawyers/${lawyer.id}`)}
-                          className="w-full flex items-center justify-center gap-1 px-2 py-2 bg-emerald-600/10 hover:bg-emerald-600/20 text-emerald-400 rounded-lg text-xs min-h-[36px] transition-colors focus:outline-none focus:ring-2 focus:ring-emerald-500"
+                          className="w-full flex items-center justify-center gap-1 px-2 py-2 bg-emerald-600/10 hover:bg-emerald-600/20 text-emerald-400 rounded-lg text-xs min-h-[40px] transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-emerald-500 active:scale-[0.98]"
                         >
-                          <ExternalLink className="w-3 h-3" />
+                          <ExternalLink className="w-3 h-3 flex-shrink-0" />
                           <span>{t('user.lawyers.viewProfile' as any)}</span>
                         </button>
                       </div>
@@ -882,44 +880,42 @@ export default function ChatPage(): JSX.Element {
                 </div>
               )}
 
-              {/* Wizard Completion Actions */}
+              {/* Wizard Completion Actions - Mobile stacked */}
               {wizardState?.action === 'complete' && (
-                <div className="flex justify-center">
-                  <div className="flex gap-2">
-                    <button
-                      type="button"
-                      onClick={() => navigate('/user/documents/new')}
-                      className="flex items-center gap-2 px-4 py-2.5 bg-emerald-600 hover:bg-emerald-700 text-white rounded-xl text-sm min-h-[44px] transition-colors focus:outline-none focus:ring-2 focus:ring-emerald-500"
-                    >
-                      <FileText className="w-4 h-4" />
-                      <span>{t('user.dashboard.createDocument' as any)}</span>
-                    </button>
-                    <button
-                      type="button"
-                      onClick={() => { setWizardState(null); setMode('general'); setMessages([]); }}
-                      className="flex items-center gap-2 px-4 py-2.5 bg-navy-800 hover:bg-navy-700 text-slate-300 rounded-xl text-sm min-h-[44px] transition-colors focus:outline-none focus:ring-2 focus:ring-emerald-500"
-                    >
-                      <MessageSquare className="w-4 h-4" />
-                      <span>{t('chat.sessions.continueSession' as any)}</span>
-                    </button>
-                  </div>
+                <div className="flex flex-col sm:flex-row justify-center gap-2 px-4">
+                  <button
+                    type="button"
+                    onClick={() => navigate('/user/documents/new')}
+                    className="flex-1 flex items-center justify-center gap-2 px-4 py-3 bg-emerald-600 hover:bg-emerald-700 text-white rounded-xl text-sm min-h-[48px] transition-all focus:outline-none focus-visible:ring-2 focus-visible:ring-emerald-500 active:scale-[0.98] shadow-lg shadow-emerald-600/20"
+                  >
+                    <FileText className="w-4 h-4" />
+                    <span>{t('user.dashboard.createDocument' as any)}</span>
+                  </button>
+                  <button
+                    type="button"
+                    onClick={() => { setWizardState(null); setMode('general'); setMessages([]); }}
+                    className="flex-1 flex items-center justify-center gap-2 px-4 py-3 bg-navy-800 hover:bg-navy-700 text-slate-300 rounded-xl text-sm min-h-[48px] transition-all focus:outline-none focus-visible:ring-2 focus-visible:ring-emerald-500 active:scale-[0.98]"
+                  >
+                    <MessageSquare className="w-4 h-4" />
+                    <span>{t('chat.sessions.continueSession' as any)}</span>
+                  </button>
                 </div>
               )}
 
               <div ref={messagesEndRef} />
             </div>
 
-            {/* Error */}
+            {/* Error - Mobile friendly */}
             {error && (
-              <div className="px-4 py-2 bg-red-500/10 border-t border-red-500/20 flex items-center justify-between flex-shrink-0">
-                <div className="flex items-center gap-2 text-red-400 text-sm">
+              <div className="px-3 sm:px-4 py-2.5 bg-red-500/10 border-t border-red-500/20 flex items-center justify-between flex-shrink-0">
+                <div className="flex items-center gap-2 text-red-400 text-sm flex-1">
                   <AlertCircle className="w-4 h-4 flex-shrink-0" />
-                  <span>{error}</span>
+                  <span className="truncate">{error}</span>
                 </div>
                 <button
                   type="button"
                   onClick={() => setError(null)}
-                  className="w-8 h-8 flex items-center justify-center rounded text-red-400 hover:text-white min-w-[44px] min-h-[44px] transition-colors focus:outline-none focus:ring-2 focus:ring-red-500"
+                  className="w-8 h-8 flex items-center justify-center rounded text-red-400 hover:text-white transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-red-500 flex-shrink-0"
                   aria-label="Dismiss error"
                 >
                   <X className="w-4 h-4" />
@@ -927,19 +923,19 @@ export default function ChatPage(): JSX.Element {
               </div>
             )}
 
-            {/* Input Area */}
-            <div className="border-t border-navy-800 bg-navy-900 p-3 flex-shrink-0" style={{ paddingBottom: 'max(0.75rem, env(safe-area-inset-bottom))' }}>
-              {/* Attachment Previews */}
+            {/* Input Area - Mobile Optimized */}
+            <div className="border-t border-navy-800 bg-navy-900/95 backdrop-blur-sm p-3 flex-shrink-0 safe-area-pb">
+              {/* Attachment Previews - Scrollable on mobile */}
               {attachments.length > 0 && (
-                <div className="flex flex-wrap gap-2 mb-2">
+                <div className="flex flex-wrap gap-2 mb-2 max-h-20 overflow-y-auto">
                   {attachments.map((att, i) => (
                     <div key={i} className="flex items-center gap-1.5 px-2.5 py-1.5 bg-navy-800 rounded-lg border border-navy-700">
                       {getFileIcon(att.type)}
-                      <span className="text-xs text-slate-300 truncate max-w-32">{att.filename}</span>
+                      <span className="text-xs text-slate-300 truncate max-w-[120px]">{att.filename}</span>
                       <button
                         type="button"
                         onClick={() => removeAttachment(i)}
-                        className="w-6 h-6 flex items-center justify-center rounded text-slate-500 hover:text-red-400 min-w-[44px] min-h-[44px] transition-colors focus:outline-none focus:ring-2 focus:ring-red-500"
+                        className="w-6 h-6 flex items-center justify-center rounded text-slate-500 hover:text-red-400 transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-red-500 flex-shrink-0"
                         aria-label={`Remove ${att.filename}`}
                       >
                         <X className="w-3 h-3" />
@@ -950,12 +946,12 @@ export default function ChatPage(): JSX.Element {
               )}
 
               <div className="flex items-end gap-2">
-                {/* Attach Button */}
+                {/* Attach Button - Better touch target */}
                 <button
                   type="button"
                   onClick={() => fileInputRef.current?.click()}
                   disabled={sending || uploading}
-                  className="w-11 h-11 flex items-center justify-center rounded-xl bg-navy-800 hover:bg-navy-700 disabled:opacity-50 text-slate-400 hover:text-emerald-400 transition-colors flex-shrink-0 min-w-[44px] min-h-[44px] focus:outline-none focus:ring-2 focus:ring-emerald-500"
+                  className="w-11 h-11 flex items-center justify-center rounded-xl bg-navy-800 hover:bg-navy-700 disabled:opacity-50 text-slate-400 hover:text-emerald-400 transition-all flex-shrink-0 focus:outline-none focus-visible:ring-2 focus-visible:ring-emerald-500 active:scale-95"
                   aria-label={t('chat.input.attachFile' as any)}
                 >
                   {uploading ? <Loader2 className="w-5 h-5 animate-spin" /> : <Paperclip className="w-5 h-5" />}
@@ -970,8 +966,8 @@ export default function ChatPage(): JSX.Element {
                   aria-hidden="true"
                 />
 
-                {/* Text Input */}
-                <div className="flex-1 relative">
+                {/* Text Input - Better mobile sizing */}
+                <div className="flex-1 relative min-w-0">
                   <textarea
                     ref={inputRef}
                     value={input}
@@ -984,17 +980,17 @@ export default function ChatPage(): JSX.Element {
                     }
                     disabled={sending}
                     rows={1}
-                    className="w-full px-4 py-3 bg-navy-800 border border-navy-700 rounded-xl text-white text-sm placeholder-slate-600 focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-transparent resize-none max-h-[120px] min-h-[44px] disabled:opacity-50"
+                    className="w-full px-3 sm:px-4 py-3 bg-navy-800 border border-navy-700 rounded-xl text-white text-sm placeholder-slate-600 focus:outline-none focus-visible:ring-2 focus-visible:ring-emerald-500 focus:border-transparent resize-none max-h-[120px] min-h-[44px] disabled:opacity-50 transition-all"
                     aria-label={t('chat.input.placeholder' as any)}
                   />
                 </div>
 
-                {/* Send Button */}
+                {/* Send Button - Better touch target with animation */}
                 <button
                   type="button"
                   onClick={handleSend}
                   disabled={sending || !input.trim()}
-                  className="w-11 h-11 flex items-center justify-center rounded-xl bg-emerald-600 hover:bg-emerald-700 disabled:bg-navy-800 disabled:text-slate-600 text-white transition-colors flex-shrink-0 min-w-[44px] min-h-[44px] focus:outline-none focus:ring-2 focus:ring-emerald-500"
+                  className="w-11 h-11 flex items-center justify-center rounded-xl bg-gradient-to-br from-emerald-600 to-emerald-700 hover:from-emerald-500 hover:to-emerald-600 disabled:from-navy-800 disabled:to-navy-800 disabled:text-slate-600 text-white transition-all flex-shrink-0 shadow-lg shadow-emerald-600/20 disabled:shadow-none focus:outline-none focus-visible:ring-2 focus-visible:ring-emerald-500 active:scale-95"
                   aria-label={t('chat.input.send' as any)}
                 >
                   {sending ? <Loader2 className="w-5 h-5 animate-spin" /> : <Send className="w-5 h-5" />}
@@ -1002,7 +998,7 @@ export default function ChatPage(): JSX.Element {
               </div>
 
               {/* Disclaimer */}
-              <p className="text-center text-xs text-slate-600 mt-2">
+              <p className="text-center text-[10px] text-slate-600 mt-2">
                 AI may produce inaccurate information. Verify important details.
               </p>
             </div>
@@ -1050,24 +1046,24 @@ export default function ChatPage(): JSX.Element {
           </div>
         )}
 
-        {/* SESSIONS TAB */}
+        {/* SESSIONS TAB - Mobile Optimized */}
         {activeTab === 'sessions' && (
-          <div className="flex-1 overflow-y-auto p-4 space-y-3">
+          <div className="flex-1 overflow-y-auto p-3 sm:p-4 space-y-3">
             {sessions.length === 0 ? (
-              <div className="text-center py-16">
+              <div className="text-center py-16 px-4">
                 <Clock className="w-12 h-12 text-slate-700 mx-auto mb-4" />
                 <p className="text-slate-400 font-medium">{t('common.misc.noData' as any)}</p>
                 <p className="text-slate-500 text-sm mt-1">{t('chat.history.noHistory' as any)}</p>
               </div>
             ) : (
               sessions.map(session => (
-                <div key={session.id} className="bg-navy-900 border border-navy-800 rounded-xl p-4">
+                <div key={session.id} className="bg-navy-900/95 backdrop-blur-sm border border-navy-800 rounded-xl p-3 sm:p-4 shadow-sm">
                   <div className="flex items-start justify-between gap-3 mb-3">
                     <div className="min-w-0 flex-1">
                       <h3 className="text-sm font-medium text-white truncate">{session.templateName}</h3>
                       <p className="text-xs text-slate-500 mt-0.5">{formatDate(session.updatedAt)}</p>
                     </div>
-                    <span className={`px-2 py-0.5 rounded-md text-xs font-medium flex-shrink-0 ${
+                    <span className={`px-2 py-0.5 rounded-md text-xs font-medium flex-shrink-0 whitespace-nowrap ${
                       session.status === 'COMPLETED' ? 'bg-emerald-500/10 text-emerald-400' :
                       session.status === 'IN_PROGRESS' ? 'bg-blue-500/10 text-blue-400' :
                       'bg-slate-500/10 text-slate-400'
@@ -1079,7 +1075,7 @@ export default function ChatPage(): JSX.Element {
                   {/* Progress */}
                   <div className="w-full h-1.5 bg-navy-800 rounded-full overflow-hidden mb-3">
                     <div
-                      className="h-full bg-emerald-500 rounded-full transition-all"
+                      className="h-full bg-gradient-to-r from-emerald-600 to-emerald-400 rounded-full transition-all"
                       style={{ width: `${session.progress}%` }}
                     />
                   </div>
@@ -1090,7 +1086,7 @@ export default function ChatPage(): JSX.Element {
                       <button
                         type="button"
                         onClick={() => resumeSession(session)}
-                        className="flex-1 flex items-center justify-center gap-1.5 px-3 py-2.5 bg-emerald-600/10 hover:bg-emerald-600/20 text-emerald-400 rounded-lg text-sm min-h-[44px] transition-colors focus:outline-none focus:ring-2 focus:ring-emerald-500"
+                        className="flex-1 flex items-center justify-center gap-1.5 px-3 py-2.5 bg-emerald-600/10 hover:bg-emerald-600/20 text-emerald-400 rounded-lg text-sm min-h-[44px] transition-all focus:outline-none focus-visible:ring-2 focus-visible:ring-emerald-500 active:scale-[0.98]"
                       >
                         <Play className="w-4 h-4" />
                         <span>{t('chat.sessions.continueSession' as any)}</span>
@@ -1099,7 +1095,7 @@ export default function ChatPage(): JSX.Element {
                     <button
                       type="button"
                       onClick={() => deleteSession(session.id)}
-                      className="w-11 h-11 flex items-center justify-center rounded-lg text-slate-400 hover:text-red-400 hover:bg-red-500/10 transition-colors min-w-[44px] min-h-[44px] focus:outline-none focus:ring-2 focus:ring-red-500"
+                      className="w-11 h-11 flex items-center justify-center rounded-lg text-slate-400 hover:text-red-400 hover:bg-red-500/10 transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-red-500 flex-shrink-0"
                       aria-label="Delete session"
                     >
                       <Trash2 className="w-4 h-4" />
@@ -1111,11 +1107,11 @@ export default function ChatPage(): JSX.Element {
           </div>
         )}
 
-        {/* HISTORY TAB */}
+        {/* HISTORY TAB - Mobile Optimized */}
         {activeTab === 'history' && (
-          <div className="flex-1 overflow-y-auto p-4 space-y-3">
+          <div className="flex-1 overflow-y-auto p-3 sm:p-4 space-y-3">
             {aiChats.length === 0 ? (
-              <div className="text-center py-16">
+              <div className="text-center py-16 px-4">
                 <History className="w-12 h-12 text-slate-700 mx-auto mb-4" />
                 <p className="text-slate-400 font-medium">{t('common.misc.noData' as any)}</p>
                 <p className="text-slate-500 text-sm mt-1">{t('chat.history.noHistory' as any)}</p>
@@ -1124,7 +1120,7 @@ export default function ChatPage(): JSX.Element {
               aiChats.map(chat => {
                 const lastMsg = chat.messages[chat.messages.length - 1];
                 return (
-                  <div key={chat.id} className="bg-navy-900 border border-navy-800 rounded-xl p-4">
+                  <div key={chat.id} className="bg-navy-900/95 backdrop-blur-sm border border-navy-800 rounded-xl p-3 sm:p-4 shadow-sm">
                     <div className="flex items-start justify-between gap-3 mb-2">
                       <div className="min-w-0 flex-1">
                         <h3 className="text-sm font-medium text-white truncate">{chat.title}</h3>
@@ -1134,14 +1130,14 @@ export default function ChatPage(): JSX.Element {
                           </p>
                         )}
                       </div>
-                      <span className="text-xs text-slate-600 flex-shrink-0">{formatDate(chat.updatedAt)}</span>
+                      <span className="text-xs text-slate-600 flex-shrink-0 whitespace-nowrap">{formatDate(chat.updatedAt)}</span>
                     </div>
                     <p className="text-xs text-slate-500 mb-3">{chat.messages.length} messages</p>
                     <div className="flex gap-2">
                       <button
                         type="button"
                         onClick={() => resumeChat(chat)}
-                        className="flex-1 flex items-center justify-center gap-1.5 px-3 py-2.5 bg-emerald-600/10 hover:bg-emerald-600/20 text-emerald-400 rounded-lg text-sm min-h-[44px] transition-colors focus:outline-none focus:ring-2 focus:ring-emerald-500"
+                        className="flex-1 flex items-center justify-center gap-1.5 px-3 py-2.5 bg-emerald-600/10 hover:bg-emerald-600/20 text-emerald-400 rounded-lg text-sm min-h-[44px] transition-all focus:outline-none focus-visible:ring-2 focus-visible:ring-emerald-500 active:scale-[0.98]"
                       >
                         <MessageSquare className="w-4 h-4" />
                         <span>{t('chat.sessions.continueSession' as any)}</span>
@@ -1149,7 +1145,7 @@ export default function ChatPage(): JSX.Element {
                       <button
                         type="button"
                         onClick={() => deleteChat(chat.id)}
-                        className="w-11 h-11 flex items-center justify-center rounded-lg text-slate-400 hover:text-red-400 hover:bg-red-500/10 transition-colors min-w-[44px] min-h-[44px] focus:outline-none focus:ring-2 focus:ring-red-500"
+                        className="w-11 h-11 flex items-center justify-center rounded-lg text-slate-400 hover:text-red-400 hover:bg-red-500/10 transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-red-500 flex-shrink-0"
                         aria-label="Delete chat"
                       >
                         <Trash2 className="w-4 h-4" />
