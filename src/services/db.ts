@@ -14,6 +14,10 @@ interface WritePayload {
 const API_BASE = import.meta.env.VITE_API_URL 
   ? `${import.meta.env.VITE_API_URL}/api` 
   : '/api';
+
+// Debug logging
+console.log('[DB Service] Using API_BASE:', API_BASE, 'VITE_API_URL:', import.meta.env.VITE_API_URL);
+
 const MAX_RETRIES = 5;
 const RETRY_BASE_DELAY = 100;
 

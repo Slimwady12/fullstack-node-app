@@ -17,6 +17,9 @@ const API_BASE = import.meta.env.VITE_API_URL
   ? `${import.meta.env.VITE_API_URL}/api` 
   : '/api';
 
+// Debug logging
+console.log('[useRealtimeSync] Using API_BASE:', API_BASE, 'VITE_API_URL:', import.meta.env.VITE_API_URL);
+
 export function useRealtimeSync(): UseRealtimeSyncResult {
   const [data, setData] = useState<Database | null>(null);
   const [loading, setLoading] = useState<boolean>(true);

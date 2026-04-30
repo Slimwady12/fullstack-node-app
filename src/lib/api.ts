@@ -11,4 +11,9 @@ export const apiClient = axios.create({
   },
 });
 
+// Debug logging in development
+if (import.meta.env.DEV) {
+  console.log('[API] Using base URL:', API_BASE);
+}
+
 export default apiClient;
