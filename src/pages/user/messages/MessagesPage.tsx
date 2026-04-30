@@ -1,10 +1,8 @@
-import { apiClient } from '../../lib/api';
 import { useState, useCallback, useMemo, useEffect, useRef, ChangeEvent } from 'react';
 import { useNavigate, useParams, useSearchParams } from 'react-router-dom';
 import { useLanguage } from '../../../i18n/LanguageProvider';
 import { useRealtimeSync } from '../../../hooks/useRealtimeSync';
 import { useAuth } from '../../../hooks/useAuth';
-import axios from 'axios';
 import {
   ArrowLeft,
   Send,
@@ -17,9 +15,7 @@ import {
   FileText,
   FileImage,
   File,
-  Clock,
   CheckCircle2,
-  Plus,
   ExternalLink,
 } from 'lucide-react';
 

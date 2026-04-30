@@ -1,4 +1,3 @@
-import { apiClient } from '../../lib/api';
 import { useState, useCallback, useEffect, FormEvent, ChangeEvent } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useLanguage } from '../../../i18n/LanguageProvider';
@@ -6,7 +5,6 @@ import { useRealtimeSync } from '../../../hooks/useRealtimeSync';
 import { useAuth } from '../../../hooks/useAuth';
 import { transaction } from '../../../services/db';
 import * as auth from '../../../services/auth';
-import axios from 'axios';
 import {
   UserCircle,
   Bell,
@@ -36,7 +34,7 @@ export default function SettingsPage(): JSX.Element {
   const { t, language, setLanguage } = useLanguage();
   const navigate = useNavigate();
   const { user, activeRole, setActiveRole, logout } = useAuth();
-  const { data, loading, error: syncError, refresh } = useRealtimeSync();
+  const { data, loading, refresh } = useRealtimeSync();
 
   const [name, setName] = useState<string>('');
   const [email, setEmail] = useState<string>('');
@@ -55,15 +53,18 @@ export default function SettingsPage(): JSX.Element {
   const [avatarUploading, setAvatarUploading] = useState<boolean>(false);
 
   useEffect(() => {
-    if (user) {
-      setName(user.name);
-      setEmail(data?.users?.find(u => u.id === user.userId)?.profile?.email || '');
-      setEmailNotif(data?.users?.find(u => u.id === user.userId)?.notifications?.email ?? true);
-      setPushNotif(data?.users?.find(u => u.id === user.userId)?.notifications?.push ?? true);
-      setQuietStart(data?.users?.find(u => u.id === user.userId)?.notifications?.quietHours?.start || '22:00');
-      setQuietEnd(data?.users?.find(u => u.id === user.userId)?.notifications?.quietHours?.end || '07:00');
-      setShowPhone(data?.users?.find(u => u.id === user.userId)?.privacy?.showPhone ?? false);
-      setShowEmail(data?.users?.find(u => u.id === user.userId)?.privacy?.showEmail ?? false);
+    if (user && data?.users) {
+      const currentUserData = data.users.find(u => u.id === user.userId);
+      if (currentUserData) {
+        setName(currentUserData.name);
+        setEmail(currentUserData.profile?.email || '');
+        setEmailNotif(currentUserData.notifications?.email ?? true);
+        setPushNotif(currentUserData.notifications?.push ?? true);
+        setQuietStart(currentUserData.notifications?.quietHours?.start || '22:00');
+        setQuietEnd(currentUserData.notifications?.quietHours?.end || '07:00');
+        setShowPhone(currentUserData.privacy?.showPhone ?? false);
+        setShowEmail(currentUserData.privacy?.showEmail ?? false);
+      }
     }
   }, [user, data]);
 
@@ -120,12 +121,13 @@ export default function SettingsPage(): JSX.Element {
     try {
       const formData = new FormData();
       formData.append('file', file);
-      const res = await apiClient.post('/api/upload', formData, { headers: { 'Content-Type': 'multipart/form-data' } });
-      if (res.data.success) {
+      const res = await fetch('/api/upload', { method: 'POST', body: formData });
+      const responseData = await res.json();
+      if (responseData.success && currentUser) {
         await transaction<void>((db) => {
           const idx = db.users.findIndex(u => u.id === user.userId);
           if (idx === -1) throw new Error('User not found');
-          db.users[idx].profile.avatar = res.data.data.filename;
+          db.users[idx].profile.avatar = responseData.data.filename;
           return db;
         });
         refresh();
@@ -135,7 +137,7 @@ export default function SettingsPage(): JSX.Element {
     } finally {
       setAvatarUploading(false);
     }
-  }, [user, refresh]);
+  }, [user, currentUser, refresh]);
 
   const handleExport = useCallback(async () => {
     if (!user || !data) return;
