@@ -21,8 +21,6 @@ import {
   AlertTriangle,
   X,
   Upload,
-  Eye,
-  EyeOff,
 } from 'lucide-react';
 
 const LANGUAGES = [
@@ -85,19 +83,25 @@ export default function SettingsPage(): JSX.Element {
       await transaction<void>((db) => {
         const idx = db.users.findIndex(u => u.id === user.userId);
         if (idx === -1) throw new Error('User not found');
-        db.users[idx].name = name.trim() || db.users[idx].name;
-        if (email.trim()) db.users[idx].profile.email = email.trim();
-        db.users[idx].notifications.email = emailNotif;
-        db.users[idx].notifications.push = pushNotif;
-        db.users[idx].notifications.quietHours = { start: quietStart, end: quietEnd };
-        db.users[idx].privacy.showPhone = showPhone;
-        db.users[idx].privacy.showEmail = showEmail;
+        const userDb = db.users[idx];
+        userDb.name = name.trim() || userDb.name;
+        if (email.trim()) {
+          userDb.profile = userDb.profile || {};
+          userDb.profile.email = email.trim();
+        }
+        userDb.notifications = userDb.notifications || {};
+        userDb.notifications.email = emailNotif;
+        userDb.notifications.push = pushNotif;
+        userDb.notifications.quietHours = { start: quietStart, end: quietEnd };
+        userDb.privacy = userDb.privacy || {};
+        userDb.privacy.showPhone = showPhone;
+        userDb.privacy.showEmail = showEmail;
 
         db.auditLogs.push({
           id: crypto.randomUUID ? crypto.randomUUID() : `${Date.now()}-${Math.random().toString(36).slice(2, 9)}`,
           userId: user.userId,
           action: 'PROFILE_UPDATED',
-          details: { name: db.users[idx].name, email: db.users[idx].profile.email },
+          details: { name: userDb.name, email: userDb.profile?.email },
           timestamp: new Date().toISOString(),
           activeRole: activeRole || 'user',
         });
@@ -124,7 +128,9 @@ export default function SettingsPage(): JSX.Element {
         await transaction<void>((db) => {
           const idx = db.users.findIndex(u => u.id === user.userId);
           if (idx === -1) throw new Error('User not found');
-          db.users[idx].profile.avatar = res.data.data.filename;
+          const userDb = db.users[idx];
+          userDb.profile = userDb.profile || {};
+          userDb.profile.avatar = res.data.data.filename;
           return db;
         });
         refresh();
