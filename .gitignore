@@ -1,2 +1,1 @@
-node_modules
-.env
+Nothing should be ignored since only a TypeScript configuration file (`tsconfig.json`) was modified, which is a source/config file and not a build artifact, dependency, or temporary file.
