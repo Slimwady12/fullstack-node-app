@@ -11,7 +11,9 @@ interface WritePayload {
   lastModified: string;
 }
 
-const API_BASE = '/api';
+const API_BASE = import.meta.env.VITE_API_URL 
+  ? `${import.meta.env.VITE_API_URL}/api` 
+  : '/api';
 const MAX_RETRIES = 5;
 const RETRY_BASE_DELAY = 100;
 

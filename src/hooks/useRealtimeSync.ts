@@ -13,7 +13,9 @@ interface UseRealtimeSyncResult {
 const POLL_INTERVAL = 500;
 const MAX_RETRY_BACKOFF = 5000;
 const DEBOUNCE_DELAY = 200;
-const API_BASE = '/api';
+const API_BASE = import.meta.env.VITE_API_URL 
+  ? `${import.meta.env.VITE_API_URL}/api` 
+  : '/api';
 
 export function useRealtimeSync(): UseRealtimeSyncResult {
   const [data, setData] = useState<Database | null>(null);
