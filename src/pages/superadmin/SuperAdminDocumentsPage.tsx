@@ -1,3 +1,4 @@
+import { apiClient } from '../../lib/api';
 import { useState, useCallback, useMemo } from 'react';
 import { useLanguage } from '../../i18n/LanguageProvider';
 import { useRealtimeSync } from '../../hooks/useRealtimeSync';
@@ -122,7 +123,7 @@ export default function SuperAdminDocumentsPage(): JSX.Element {
     setReviewError(null);
 
     try {
-      const response = await axios.post(`/api/documents/${showReviewModal}/review`, {
+      const response = await apiClient.post(`/api/documents/${showReviewModal}/review`, {
         userId: user?.userId,
         lawyerId: reviewLawyerId,
         notes: reviewNotes.trim(),

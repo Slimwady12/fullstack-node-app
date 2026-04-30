@@ -1,3 +1,4 @@
+import { apiClient } from '../../lib/api';
 import { useState, useCallback, useMemo, useEffect, FormEvent } from 'react';
 import { useNavigate, useSearchParams } from 'react-router-dom';
 import { useLanguage } from '../../../i18n/LanguageProvider';
@@ -239,7 +240,7 @@ export default function WizardPage(): JSX.Element {
     }
 
     try {
-      const response = await axios.post('/api/documents', {
+      const response = await apiClient.post('/api/documents', {
         templateId: template.id,
         userId: user.userId,
         fields: formData,

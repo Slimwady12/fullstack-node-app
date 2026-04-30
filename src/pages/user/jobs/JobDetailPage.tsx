@@ -1,3 +1,4 @@
+import { apiClient } from '../../lib/api';
 import { useState, useCallback, useMemo } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import { useLanguage } from '../../../i18n/LanguageProvider';
@@ -158,7 +159,7 @@ export default function JobDetailPage(): JSX.Element {
     setActionError(null);
 
     try {
-      const response = await axios.post(`/api/jobs/${job.id}/accept`, {
+      const response = await apiClient.post(`/api/jobs/${job.id}/accept`, {
         userId: user.userId,
         lawyerId,
       });
@@ -213,7 +214,7 @@ export default function JobDetailPage(): JSX.Element {
     setDisputeError(null);
 
     try {
-      const response = await axios.post('/api/disputes', {
+      const response = await apiClient.post('/api/disputes', {
         jobId: job.id,
         userId: user.userId,
         lawyerId: job.assignedLawyerId,

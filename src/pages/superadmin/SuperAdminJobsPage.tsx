@@ -1,3 +1,4 @@
+import { apiClient } from '../../lib/api';
 import { useState, useCallback, useMemo } from 'react';
 import { useLanguage } from '../../i18n/LanguageProvider';
 import { useRealtimeSync } from '../../hooks/useRealtimeSync';
@@ -117,7 +118,7 @@ export default function SuperAdminJobsPage(): JSX.Element {
     setFakeError(null);
 
     try {
-      await axios.post(`/api/jobs/${showFakeResponseModal}/response`, {
+      await apiClient.post(`/api/jobs/${showFakeResponseModal}/response`, {
         lawyerId: fakeLawyerId,
         coverNote: fakeCoverNote.trim(),
         price: parseFloat(fakePrice),

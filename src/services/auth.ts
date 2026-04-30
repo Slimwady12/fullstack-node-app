@@ -98,7 +98,7 @@ async function createUser(phone: string, name: string): Promise<Session> {
     phone: newUser.phone,
     name: newUser.name,
     roles: newUser.roles,
-    activeRole: newUser.roles[0],
+    activeRole: newUser.roles[0] || 'user',
     joinedAt: newUser.joinedAt,
   };
 
@@ -116,7 +116,7 @@ async function completeLogin(phone: string): Promise<Session | null> {
       phone: existingUser.phone,
       name: existingUser.name,
       roles: existingUser.roles,
-      activeRole: existingUser.roles[0],
+      activeRole: existingUser.roles[0] || 'user',
       joinedAt: existingUser.joinedAt,
     };
 

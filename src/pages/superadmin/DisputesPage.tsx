@@ -1,3 +1,4 @@
+import { apiClient } from '../../lib/api';
 import { useState, useCallback, useMemo } from 'react';
 import { useLanguage } from '../../i18n/LanguageProvider';
 import { useRealtimeSync } from '../../hooks/useRealtimeSync';
@@ -92,7 +93,7 @@ export default function DisputesPage(): JSX.Element {
     setActionError(null);
 
     try {
-      const response = await axios.post(`/api/disputes/${disputeId}/resolve`, {
+      const response = await apiClient.post(`/api/disputes/${disputeId}/resolve`, {
         userId: user.userId,
         action: action === 'CANCEL' ? 'resolve' : action.toLowerCase(),
         resolution: resolutionText.trim(),

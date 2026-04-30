@@ -1,3 +1,4 @@
+import { apiClient } from '../../lib/api';
 import { useState, useCallback, useMemo } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import { useLanguage } from '../../../i18n/LanguageProvider';
@@ -148,7 +149,7 @@ export default function DocumentDetailPage(): JSX.Element {
     setCancelError(null);
 
     try {
-      const response = await axios.post(`/api/documents/${document.id}/cancel`, {
+      const response = await apiClient.post(`/api/documents/${document.id}/cancel`, {
         userId: user?.userId,
       });
 

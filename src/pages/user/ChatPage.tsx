@@ -4,6 +4,7 @@ import { useLanguage } from '../../i18n/LanguageProvider';
 import { useRealtimeSync } from '../../hooks/useRealtimeSync';
 import { useAuth } from '../../hooks/useAuth';
 import axios from 'axios';
+import { apiClient } from '../../lib/api';
 import {
   Send,
   Paperclip,
@@ -330,7 +331,7 @@ export default function ChatPage(): JSX.Element {
         const formData = new FormData();
         formData.append('file', file);
 
-        const response = await axios.post('/api/upload', formData, {
+        const response = await apiClient.post('/upload', formData, {
           headers: { 'Content-Type': 'multipart/form-data' },
         });
 
@@ -385,7 +386,7 @@ export default function ChatPage(): JSX.Element {
     }]);
 
     try {
-      const response = await fetch('/api/chat/stream', {
+      const response = await fetch(`${import.meta.env.VITE_API_URL || ''}/api/chat/stream`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
@@ -465,7 +466,7 @@ export default function ChatPage(): JSX.Element {
     setInput('');
 
     try {
-      const response = await axios.post('/api/middleman/chat', {
+      const response = await apiClient.post('/middleman/chat', {
         userId: user.userId,
         templateId: wizardState.templateId,
         message: currentInput,
@@ -562,7 +563,7 @@ export default function ChatPage(): JSX.Element {
 
   const deleteSession = useCallback(async (sessionId: string) => {
     try {
-      await axios.post('/api/db/write', {
+      await apiClient.post('/db/write', {
         data: {
           ...data,
           automations: data?.automations?.filter(a => a.id !== sessionId) || [],
@@ -577,7 +578,7 @@ export default function ChatPage(): JSX.Element {
 
   const deleteChat = useCallback(async (chatId: string) => {
     try {
-      await axios.post('/api/db/write', {
+      await apiClient.post('/db/write', {
         data: {
           ...data,
           aiChats: data?.aiChats?.filter(c => c.id !== chatId) || [],

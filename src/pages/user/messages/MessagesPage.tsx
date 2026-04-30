@@ -3,7 +3,6 @@ import { useNavigate, useParams, useSearchParams } from 'react-router-dom';
 import { useLanguage } from '../../../i18n/LanguageProvider';
 import { useRealtimeSync } from '../../../hooks/useRealtimeSync';
 import { useAuth } from '../../../hooks/useAuth';
-import axios from 'axios';
 import {
   ArrowLeft,
   Send,
@@ -16,9 +15,7 @@ import {
   FileText,
   FileImage,
   File,
-  Clock,
   CheckCircle2,
-  Plus,
   ExternalLink,
 } from 'lucide-react';
 
@@ -145,7 +142,7 @@ export default function MessagesPage(): JSX.Element {
         : activeConversation.unreadCount.lawyerId;
 
       if (myUnread > 0) {
-        axios.post(`/api/conversations/${activeConversation.id}/read`, { userId: user.userId })
+        apiClient.post(`/api/conversations/${activeConversation.id}/read`, { userId: user.userId })
           .then(() => refresh())
           .catch(() => {});
       }
@@ -162,7 +159,7 @@ export default function MessagesPage(): JSX.Element {
         if (file.size > 5 * 1024 * 1024) continue;
         const formData = new FormData();
         formData.append('file', file);
-        const response = await axios.post('/api/upload', formData, {
+        const response = await apiClient.post('/api/upload', formData, {
           headers: { 'Content-Type': 'multipart/form-data' },
         });
         if (response.data.success) {
@@ -205,7 +202,7 @@ export default function MessagesPage(): JSX.Element {
       setAttachments([]);
 
       try {
-        await axios.post(`/api/conversations/${activeConversation.id}/message`, {
+        await apiClient.post(`/api/conversations/${activeConversation.id}/message`, {
           userId: user.userId,
           content,
           attachments: currentAttachments.map(a => a.filename),
@@ -224,7 +221,7 @@ export default function MessagesPage(): JSX.Element {
       setAttachments([]);
 
       try {
-        const response = await axios.post('/api/conversations', {
+        const response = await apiClient.post('/api/conversations', {
           userId: user.userId,
           lawyerId: newLawyerId,
           context: null,
