@@ -119,4 +119,18 @@
   .animate-blink {
     animation: blink 0.8s step-end infinite;
   }
+
+  /* Safe area padding for mobile devices */
+  .safe-area-pb {
+    padding-bottom: max(0.75rem, env(safe-area-inset-bottom, 0));
+  }
+
+  .safe-area-pt {
+    padding-top: max(0.75rem, env(safe-area-inset-top, 0));
+  }
+
+  /* Touch-friendly tap highlight */
+  .touch-tap-highlight {
+    -webkit-tap-highlight-color: rgba(16, 185, 129, 0.2);
+  }
 }
