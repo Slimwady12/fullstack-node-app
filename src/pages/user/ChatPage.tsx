@@ -4,6 +4,27 @@ import { useLanguage } from '../../i18n/LanguageProvider';
 import { useRealtimeSync } from '../../hooks/useRealtimeSync';
 import { useAuth } from '../../hooks/useAuth';
 import axios from 'axios';
+
+// API base URL from environment variable with fallback
+const API_BASE = import.meta.env.VITE_API_URL 
+  ? import.meta.env.VITE_API_URL.replace(/\/$/, '') 
+  : '';
+
+// Debug logging utility for ChatPage
+const chatDebugLog = (type: string, message: string, data?: any) => {
+  const timestamp = new Date().toISOString();
+  const logPrefix = `[CHAT_DEBUG ${timestamp}]`;
+  
+  if (type === 'error') {
+    console.error(`${logPrefix} ❌ ${message}`, data || '');
+  } else if (type === 'warn') {
+    console.warn(`${logPrefix} ⚠️ ${message}`, data || '');
+  } else if (type === 'info') {
+    console.info(`${logPrefix} ℹ️ ${message}`, data || '');
+  } else {
+    console.log(`${logPrefix} ${message}`, data || '');
+  }
+};
 import {
   Send,
   Paperclip,
@@ -324,17 +345,25 @@ export default function ChatPage(): JSX.Element {
 
     setUploading(true);
     setError(null);
+    chatDebugLog('info', 'Starting file upload', { fileCount: files.length });
 
     try {
       for (const file of Array.from(files)) {
         const formData = new FormData();
         formData.append('file', file);
+        
+        const uploadUrl = `${API_BASE}/api/upload`;
+        chatDebugLog('info', 'Uploading file', { filename: file.name, url: uploadUrl });
 
-        const response = await axios.post('/api/upload', formData, {
+        const response = await axios.post(uploadUrl, formData, {
           headers: { 'Content-Type': 'multipart/form-data' },
         });
 
         if (response.data.success) {
+          chatDebugLog('success', 'File uploaded successfully', { 
+            filename: response.data.data.filename,
+            mimetype: response.data.data.mimetype 
+          });
           setAttachments(prev => [...prev, {
             filename: response.data.data.filename,
             url: `/uploads/${response.data.data.filename}`,
@@ -342,7 +371,11 @@ export default function ChatPage(): JSX.Element {
           }]);
         }
       }
-    } catch {
+    } catch (error) {
+      chatDebugLog('error', 'File upload failed', { 
+        error: error instanceof Error ? error.message : String(error),
+        fileCount: files.length 
+      });
       setError(t('errors.uploadFailed' as any));
     } finally {
       setUploading(false);
@@ -385,7 +418,7 @@ export default function ChatPage(): JSX.Element {
     }]);
 
     try {
-      const response = await fetch('/api/chat/stream', {
+      const response = await fetch(`${API_BASE}/api/chat/stream`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
@@ -465,7 +498,7 @@ export default function ChatPage(): JSX.Element {
     setInput('');
 
     try {
-      const response = await axios.post('/api/middleman/chat', {
+      const response = await axios.post(`${API_BASE}/api/middleman/chat`, {
         userId: user.userId,
         templateId: wizardState.templateId,
         message: currentInput,
