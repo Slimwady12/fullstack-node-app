@@ -69,7 +69,6 @@ async function write(data: Database, lastModified: string): Promise<void> {
     if (axios.isAxiosError(error)) {
       const status = error.response?.status;
       const message = error.response?.data?.error || error.message;
-      const code = error.response?.data?.code || 'DB_WRITE_ERROR';
 
       if (status === 409) {
         throw { code: 'CONFLICT', message: 'Database was modified by another process', retryable: true };
