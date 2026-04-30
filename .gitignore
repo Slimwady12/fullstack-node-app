@@ -5,17 +5,15 @@ node_modules/
 # Environment
 .env
 .env.local
-*.env.*
+.env.*
 
 # Logs
 *.log
 
-# Editor/IDE
-.vscode/
-.idea/
+# Temporary files
+*.tmp
 *.swp
 *.swo
-*.tmp
 
 # Build artifacts
 dist/
@@ -28,12 +26,28 @@ __pycache__/
 *.pyo
 *.pyd
 .Python
-*.so
-.coverage
+env/
+venv/
+.venv/
+.ENV
+.ENV.local
+
+# Coverage
 coverage/
 htmlcov/
+.coverage
 
-# Compression
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Compressed files
 *.zip
 *.gz
 *.tar
